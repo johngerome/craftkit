@@ -1,0 +1,21 @@
+$color-red {
+    color:red;
+}
+
+.header {
+    content: "header";
+
+    @media (min-width: 400px){
+        width: 100%;
+        @extend $color-red;
+    }
+}
+
+.footer {
+    content: "footer";
+
+    @media (min-width: 400px){
+        width: 100%;
+        @extend $color-red;
+    }
+}

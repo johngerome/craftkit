@@ -8,6 +8,8 @@
 //                         to the `plugins` object.
 // [2] run-sequence      : Temporary solution until gulp 4.
 //                         https://github.com/gulpjs/gulp/issues/355
+// [3] kouto-swiss       : A Complete CSS framework for Stylus
+//                         http://kouto-swiss.io/docs.html
 // see package.json file for more plugins
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -19,6 +21,7 @@ var plugins     = require('gulp-load-plugins')(); //[1]
 var runSequence = require('run-sequence');//[2]
 var pkg         = require('./package.json');
 var browserSync = require('browser-sync');
+var koutoSwiss  = require( "kouto-swiss" );
 var reload      = browserSync.reload;
 
 var APP_DIR         = 'app';
@@ -34,22 +37,23 @@ var BUILD_DIR       = 'dist';
 gulp.task('dev-styles', function() {
     return gulp.src(APP_DIR+ '/styl/app.styl')
         .pipe(plugins.stylus({
+            use: koutoSwiss(),
             sourcemap: {
                 inline: true
             }
         }))
-        .pipe(plugins.pleeease({
-            minifier: false
-        }))
+        .pipe(plugins.pleeease())
+        .pipe(plugins.minifyCss({keepBreaks:true}))
         .pipe(gulp.dest(BUILD_DIR+ '/css'));
 });
 
 gulp.task('prod-styles', function() {
     return gulp.src(APP_DIR+ '/styl/app.styl')
-        .pipe(plugins.stylus())
-        .pipe(plugins.pleeease({
-            minifier: true
+        .pipe(plugins.stylus({
+            use: koutoSwiss()
         }))
+        .pipe(plugins.pleeease())
+        .pipe(plugins.minifyCss())
         .pipe(gulp.dest(BUILD_DIR+ '/css'));
 });
 

@@ -103,11 +103,23 @@ gulp.task('templates', function() {
     .pipe(plugins.jade({
       locals: YOUR_LOCALS
     }))
-    .pipe(gulp.dest(BUILD_DIR))
+    .pipe(gulp.dest(BUILD_DIR));
 });
 
 
 
+// Copy Other Files
+gulp.task('copy', function() {
+    gulp.src([
+        APP_DIR+ '/.htaccess',
+        APP_DIR+ '/browserconfig.xml',
+        APP_DIR+ '/crossdomain.xml',
+        APP_DIR+ '/humans.txt',
+        APP_DIR+ '/robots.txt',
+        APP_DIR+ '/favicon.ico',
+        ])
+    .pipe(gulp.dest(BUILD_DIR));
+});
 
 
 // clean build directory
@@ -131,7 +143,7 @@ gulp.task('serve', function () {
     // https: true,
     server: [BUILD_DIR]
   });
-    gulp.watch(APP_DIR+ '/**/*.html', reload);
+    gulp.watch(APP_DIR+ '/**/*.jade', ['templates', reload]);
     gulp.watch(APP_DIR+ '/styl/**/*.{styl,css}', ['prod-styles', reload]);
     gulp.watch(APP_DIR+ '/js/**/*.js', ['jshint']);
     gulp.watch(APP_DIR+ '/images/**/*', reload);
@@ -145,14 +157,14 @@ gulp.task('serve', function () {
 gulp.task('build', function(done) {
     runSequence(
         'clean',
-        ['prod-styles', 'compile-scripts', 'images', 'templates'],
+        ['prod-styles', 'compile-scripts', 'images', 'templates', 'copy'],
     done);
 });
 
 gulp.task('development', function(done) {
     runSequence(
         'clean',
-        ['dev-styles', 'compile-scripts', 'images', 'templates'],
+        ['dev-styles', 'compile-scripts', 'images', 'templates', 'copy'],
         'serve',
     done);
 });

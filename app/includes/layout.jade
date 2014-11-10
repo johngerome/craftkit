@@ -12,10 +12,10 @@ html(lang="en")
 
         link(rel="apple-touch-icon", href="apple-touch-icon.png")
 
-        //- each style in stylesheets
-        //-     link(rel="stylesheets", href="css/#{style}")
+        each style in stylesheets
+            link(rel="stylesheets", href="css/#{style}")
 
-        script(src="js/vendor/modernizr-2.8.3.min.js")
+        script(src="//cdn.jsdelivr.net/modernizr/2.8.3/modernizr.min.js")
 
     body
         <!--[if lt IE 8]>
@@ -24,4 +24,4 @@ html(lang="en")
 
         block content
 
-        script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js")
+        script(src="//cdn.jsdelivr.net/jquery/2.1.1/jquery.min.js")

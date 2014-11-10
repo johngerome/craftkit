@@ -91,6 +91,25 @@ gulp.task('images', function () {
 });
 
 
+
+
+////////////////////////////////////////////////////////////////////////////////
+/// HTML
+////////////////////////////////////////////////////////////////////////////////
+gulp.task('templates', function() {
+  var YOUR_LOCALS = {};
+
+  gulp.src(APP_DIR+ '/patterns/pages/**/*.jade')
+    .pipe(plugins.jade({
+      locals: YOUR_LOCALS
+    }))
+    .pipe(gulp.dest(BUILD_DIR))
+});
+
+
+
+
+
 // clean build directory
 gulp.task('clean', function (done) {
     require('del')(
@@ -110,7 +129,7 @@ gulp.task('serve', function () {
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
     // https: true,
-    server: [APP_DIR]
+    server: [BUILD_DIR]
   });
     gulp.watch(APP_DIR+ '/**/*.html', reload);
     gulp.watch(APP_DIR+ '/styl/**/*.{styl,css}', ['prod-styles', reload]);
@@ -126,14 +145,14 @@ gulp.task('serve', function () {
 gulp.task('build', function(done) {
     runSequence(
         'clean',
-        ['prod-styles', 'compile-scripts', 'images'],
+        ['prod-styles', 'compile-scripts', 'images', 'templates'],
     done);
 });
 
 gulp.task('development', function(done) {
     runSequence(
         'clean',
-        ['dev-styles', 'compile-scripts'],
+        ['dev-styles', 'compile-scripts', 'images', 'templates'],
         'serve',
     done);
 });

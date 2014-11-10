@@ -1,0 +1,27 @@
+include ./variables.jade
+html(lang="en")
+    head
+        meta(charset="utf-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+
+        block title
+            title pageTitle
+
+        meta(name="description", content="#{meta.description}")
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+
+        link(rel="apple-touch-icon", href="apple-touch-icon.png")
+
+        //- each style in stylesheets
+        //-     link(rel="stylesheets", href="css/#{style}")
+
+        script(src="js/vendor/modernizr-2.8.3.min.js")
+
+    body
+        <!--[if lt IE 8]>
+        p.browserupgrade You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        block content
+
+        script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js")

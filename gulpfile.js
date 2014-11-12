@@ -18,10 +18,10 @@
 
 var gulp        = require('gulp');
 var plugins     = require('gulp-load-plugins')(); //[1]
-var runSequence = require('run-sequence');//[2]
+var runSequence = require('run-sequence'); //[2]
 var pkg         = require('./package.json');
 var browserSync = require('browser-sync');
-var koutoSwiss  = require( "kouto-swiss" );
+var koutoSwiss  = require('kouto-swiss'); //[3]
 var reload      = browserSync.reload;
 
 var APP_DIR         = 'app';
@@ -37,13 +37,16 @@ var BUILD_DIR       = 'dist';
 gulp.task('dev-styles', function() {
     return gulp.src(APP_DIR+ '/styl/app.styl')
         .pipe(plugins.stylus({
+            linenos: false,
             use: koutoSwiss(),
             sourcemap: {
                 inline: true
             }
         }))
-        .pipe(plugins.pleeease())
-        .pipe(plugins.minifyCss({keepBreaks:true}))
+        .pipe(plugins.pleeease({
+            minifier: false
+        }))
+        // .pipe(plugins.minifyCss({keepBreaks:true})) // source map removed
         .pipe(gulp.dest(BUILD_DIR+ '/css'));
 });
 
@@ -148,7 +151,7 @@ gulp.task('serve', function () {
     server: [BUILD_DIR]
   });
     gulp.watch(APP_DIR+ '/**/*.jade', ['templates', reload]);
-    gulp.watch(APP_DIR+ '/styl/**/*.{styl,css}', ['prod-styles', reload]);
+    gulp.watch(APP_DIR+ '/**/*.styl', ['dev-styles', reload]);
     gulp.watch(APP_DIR+ '/js/**/*.js', ['jshint']);
     gulp.watch(APP_DIR+ '/images/**/*', reload);
 });

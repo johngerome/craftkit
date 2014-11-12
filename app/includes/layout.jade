@@ -7,15 +7,18 @@ html(lang="en")
         block title
             title pageTitle
 
-        meta(name="description", content="#{meta.description}")
-        meta(name="viewport", content="width=device-width, initial-scale=1")
+        each dns in dnsPrefetch
+            link(rel="dns-prefetch", href="#{dns}")
 
         link(rel="apple-touch-icon", href="apple-touch-icon.png")
 
         each style in stylesheets
-            link(rel="stylesheets", href="css/#{style}")
+            link(type="text/css", rel="stylesheet", href="css/#{style}")
 
         script(src="//cdn.jsdelivr.net/modernizr/2.8.3/modernizr.min.js")
+
+        meta(name="description", content="#{meta.description}")
+        meta(name="viewport", content="width=device-width, initial-scale=1")
 
     body
         <!--[if lt IE 8]>

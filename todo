@@ -1,1 +1,28 @@
 Responsive Typography base on http://typecast.com/blog/a-more-modern-scale-for-web-typography.
+-------------------------------
+gulp-stylus bug:
+ON: saving app.styl (bootstrap file)
+RESULTS:
+/home/gerome/www/github/styly/node_modules/gulp-stylus/node_modules/accord/node_modules/when/lib/decorators/unhandledRejection.js:101
+                throw e;
+                      ^
+TypeError: Cannot read property 'lineno' of undefined
+    at Renderer.render (/home/gerome/www/github/styly/node_modules/gulp-stylus/node_modules/stylus/lib/renderer.js:112:53)
+    at Object.<anonymous> (/home/gerome/www/github/styly/node_modules/gulp-stylus/node_modules/accord/node_modules/when/node.js:82:6)
+    at Pending.<anonymous> (/home/gerome/www/github/styly/node_modules/gulp-stylus/node_modules/accord/node_modules/when/lib/makePromise.js:383:7)
+    at tryCatchReject (/home/gerome/www/github/styly/node_modules/gulp-stylus/node_modules/accord/node_modules/when/lib/makePromise.js:779:30)
+    at runContinuation1 (/home/gerome/www/github/styly/node_modules/gulp-stylus/node_modules/accord/node_modules/when/lib/makePromise.js:746:4)
+    at Fulfilled.when (/home/gerome/www/github/styly/node_modules/gulp-stylus/node_modules/accord/node_modules/when/lib/makePromise.js:562:4)
+    at ContinuationTask.run (/home/gerome/www/github/styly/node_modules/gulp-stylus/node_modules/accord/node_modules/when/lib/makePromise.js:666:24)
+    at Scheduler._drain (/home/gerome/www/github/styly/node_modules/gulp-stylus/node_modules/accord/node_modules/when/lib/Scheduler.js:62:19)
+    at Scheduler.drain (/home/gerome/www/github/styly/node_modules/gulp-stylus/node_modules/accord/node_modules/when/lib/Scheduler.js:27:9)
+    at process._tickCallback (node.js:419:13)
+
+
+
+
+--------------------------------------------------------------------------------
+FIX type-font-size MIXIN
+add Traping
+
+

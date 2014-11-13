@@ -46,7 +46,7 @@ gulp.task('dev-styles', function() {
         .pipe(plugins.pleeease({
             minifier: false
         }))
-        // .pipe(plugins.minifyCss({keepBreaks:true})) // source map removed
+        // .pipe(plugins.minifyCss({keepBreaks:true})) // source map would be removed
         .pipe(gulp.dest(BUILD_DIR+ '/css'));
 });
 

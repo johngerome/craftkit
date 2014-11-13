@@ -1,78 +1,19 @@
-// based on http://typecast.com/blog/a-more-modern-scale-for-web-typography
 
-type = {
-    h1 : {
-        small : {
-            font-size: em(32px),
-            line-height: 1.25em
-        },
-        medium: {
-            font-size: em(40px),
-            line-height: 1.125em
-        },
-        large: {
-            font-size: em(48px),
-            line-height: 1.05em
-        }
-    }
+$type-font-smoothing = true;
 
-    h2 : {
-        small : {
-            font-size: em(26px),
-            line-height: 1.15384615em
-        },
-        medium: {
-            font-size: em(32px),
-            line-height: 1.25
-        },
-        large: {
-            font-size: em(36px),
-            line-height: 1.25
-        }
-    }
+$type-mono-family    = font-stack('Lucida Console');
+$type-serif-family   = font-stack('Georgia');
 
-    h3 : {
-        small : {
-            font-size: em(22px),
-            line-height: 1.13636364
-        },
-        medium: {
-            font-size: em(32px),
-            line-height: 1.25
-        },
-        large: {
-            font-size: em(36px),
-            line-height: 1.25
-        }
-    }
+$type-heading-family = font-stack('Cambria');
 
-    h4 : {
-        small : {
-            font-size: em(18px),
-            line-height: 1.11111111
-        },
-        medium: {
-            font-size: em(18px),
-            line-height: 1.22222222
-        },
-        large: {
-            font-size: em(18px),
-            line-height: 1.22222222
-        }
-    }
 
-    blockquote : {
-        small : {
-            font-size: em(20px),
-            line-height: 1.25em
-        },
-        medium: {
-            font-size: em(24px),
-            line-height: 1.45833333em
-        },
-        large: {
-            font-size: em(24px),
-            line-height: 1.45833333em
-        }
-    }
-}
+// [1] Paragraph setting that you can turn on or off the indent of the first line
+// of a new paragraph.
+// [2] Paragraph setting that you can turn on or off to have your paragraphs ragged
+// right or justified.
+
+$type-paragraph-indent    = true; // [1]
+$type-paragraph-justify   = true; // [2]
+
+
+

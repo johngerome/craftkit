@@ -1,0 +1,17 @@
+// Generates modular scale values in Ems. [Note]If you need more size up and/or down
+// then add more sizes.
+// [1] One step down in the modular scale in EMs
+// [2] Two steps down in the modular scale in EMs
+// [3] Three steps down in the modular scale in EMs
+// [4] One step up in the modular scale in EMs
+// [5] Two steps up in the modular scale in EMs
+// [6] Three steps up in the modular scale in EMs
+// [7] Four steps up in the modular scale in EMs
+
+$ms-down1 = $base-em-font-size / $base-ratio; // [1]
+$ms-down2 = $ms-down1 /$base-ratio; // [2]
+$ms-down3 = $ms-down2 / $base-ratio; // [3]
+$ms-up1   = $base-em-font-size * $base-ratio; // [4]
+$ms-up2   = $ms-up1 * $base-ratio; // [5]
+$ms-up3   = $ms-up2 * $base-ratio; // [6]
+$ms-up4   = $ms-up3 * $base-ratio; // [7]

@@ -1,88 +1,272 @@
-// base on  http://typecast.com/blog/a-more-modern-scale-for-web-typography
+/* ==========================================================================
+   Box Sizing
+   Source: http://www.paulirish.com/2012/box-sizing-border-box-ftw/
+   ========================================================================= */
+
+*{
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+}
+
+
+
+/* set 100% = 16px default font-size on all browser */
 html
-    font-size: 100%;
+    font-size : (remove-unit($base-font-size) / remove-unit(16px)) * 100%;
+    /* Stops devices from scaling up text. */
+    -webkit-text-size-adjust : 100%;
+    -ms-text-size-adjust     : 100%;
+
+
+
+/*
+    By specifying the font-size-adjust property, the browser will adjust the
+    font size to be the same regardless of the font family
+*/
 
 html, body, caption, th, td, input, textarea, select, option, legend, fieldset, h1, h2, h3, h4, h5, h6
     font-size-adjust: 0.5;
 
 
 
-body
-    font-family: $base-font-family
-    font-size  : $base-font-size; /* equivalent to 16px */
-    line-height: $base-line-height; /* equivalent to 20px */
+/* Browsers set margins on all block-level elements (such as headings, lists
+   and blockquotes) so a way of ensuring that typographic attention is paid to
+   all such elements is to reset the margins at the beginning of your style sheet. */
 
-@media all and (min-width: 43.75em)
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-family: $type-heading-family;
+
+
+
+
+body
+    margin      : 0;
+    padding     : 0;
+    font-family : $base-font-family
+    font-weight : 400;
+    color       : $base-text-color;
+
+    if $type-font-smoothing
+        // optional
+        text-shadow: 0 -1px 1px alpha(#fff, 0.01);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+
+    setLeading();
+
+
+@media all and (min-width: breakpoints.medium)
     body
         font-size: $base-font-size /* equivalent to 16px */
         line-height: 1.375; /* equivalent to 22px */
 
 
-// small
-h1
-    font-size: type.h1.small.font-size; /* 2x body copy size = 32px */
-    line-height: type.h1.small.line-height; /* 45px / 36px */
-// medium
-@media all and (min-width: breakpoints.medium)
-    h1
-        font-size: type.h1.medium.font-size; /* 2.5x body copy size = 40px */
-        line-height: type.h1.medium.line-height;
-// large
-@media all and (min-width: breakpoints.large)
-    h1
-        font-size: type.h1.large.font-size; /* 3x body copy size = 48px */
-        line-height: type.h1.large.line-height; /* keep to a multiple of the 20px line height and something more appropriate for display headings */
+
+
+/* ==========================================================================
+   Base styles Anchor / Links
+   Source: http://sixrevisions.com/usability/hyperlink-design/
+   ========================================================================== */
+a
+    color:$base-link-color;
+
+    &:hover, &:focus
+        color: $base-link-hover-color;
 
 
 
-h2
-    font-size: type.h2.small.font-size; /* 1.625x body copy size = 26px */
-    line-height: type.h2.small.line-height; /* 30px / 26px */
+/* ==========================================================================
+   Base Heading styles
+   ========================================================================== */
 
-@media all and (min-width: breakpoints.medium)
-    h2
-        font-size: type.h2.medium.font-size; /* 2x body copy size = 32px */
-        line-height: type.h2.medium.line-height;
+h1, .h1
+    margin-bottom: emRhythm(1, $ms-up2)
+    setType(6, $ms-up2)
 
-@media all and (min-width: breakpoints.large)
-    h2
-        font-size: type.h2.large.font-size; /* 2.25x body copy size = 36px */
-        line-height: type.h2.large.line-height;
+    @media (min-width: breakpoints.medium)
+        margin-bottom: emRhythm(1, $ms-up3)
+        setType(8, $ms-up3)
 
-
-
-h3
-    font-size: type.h3.small.font-size; /* 1.375x body copy size = 22px */
-    line-height: type.h3.small.line-height; /* 25px / 22px */
-
-@media all and (min-width: breakpoints.medium)
-    h3
-        font-size: type.h3.medium.font-size; /* 1.5x body copy size = 24px */
-        line-height: type.h3.medium.line-height;
-
-@media all and (min-width: breakpoints.large)
-    h3
-        font-size: type.h3.medium.font-size; /* 1.75x body copy size = 28px */
-        line-height: type.h3.medium.line-height;
+    @media (min-width: breakpoints.large)
+        margin-bottom: emRhythm(1, $ms-up4)
+        setType(10, $ms-up4)
 
 
+h2, .h2
+    margin-bottom: emRhythm(1, $ms-up1)
+    setType(5, $ms-up1)
 
-h4
-    font-size: type.h4.small.font-size; /* 1.125x body copy size = 18px */
-    line-height: type.h4.small.line-height;
+    @media (min-width: breakpoints.medium)
+        margin-bottom: emRhythm(1, $ms-up2)
+        setType(6, $ms-up2)
 
-@media all and (min-width: breakpoints.large)
-    h4
-        font-size: type.h4.large.font-size
-        line-height: type.h4.large.line-height; /* (22px / 18px */
+    @media (min-width: breakpoints.large)
+        margin-bottom: emRhythm(1, $ms-up3)
+        setType(8, $ms-up3);
 
 
+h3, .h3
+    margin-bottom: emRhythm(1, $ms-up1)
+    setType(5, $ms-up1)
+
+    @media (min-width: breakpoints.large)
+        margin-bottom: emRhythm(1, $ms-up2)
+        setType(6, $ms-up2)
+
+
+h4, .h4
+    margin-bottom: emRhythm(1, $ms-up1)
+    setType(5, $ms-up1)
+
+
+h5, .h5,
+h6, .h6
+    margin-bottom: emRhythm(1)
+    setType(4);
+
+
+
+/* ==========================================================================
+   Base Paragraph styles
+   ========================================================================== */
+
+p
+    margin-top: 0;
+    margin-bottom: emRhythm($base-line-multi)
+    padding-top: 0;
+    padding-bottom: 0;
+    max-width: emRhythm(96);
+    -webkit-hyphens: auto;
+    -epub-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    -o-hyphens: auto;
+    hyphens: auto;
+    word-wrap: break-word;
+
+    @media (min-width: breakpoints.medium)
+        if $type-paragraph-justify
+            text-align: justify
+
+
+    if $type-paragraph-indent
+        p + p
+            margin-top: emRhythm($base-line-multi * -1)
+            text-indent: emRhythm($base-line-multi)
+
+
+
+/* ==========================================================================
+   Base List styles
+   ========================================================================== */
+
+ol,
+ul,
+dl
+    margin-top: 0;
+    margin-bottom: emRhythm(4)
+    margin-left: emRhythm(4)
+    padding-top: 0;
+    padding-bottom: 0;
+
+ul ul,
+ol ol,
+dl dl
+    margin-left: 0;
+
+
+ul
+    list-style: disc;
+
+
+ol
+    list-style: decimal;
+
+
+
+
+/* ==========================================================================
+   Base abbr styles
+   ========================================================================== */
+
+// https://developer.mozilla.org/en-US/docs/CSS/font-variant
+abbr
+    font-variant: small-caps;
+    font-weight: 600;
+    text-transform: lowercase;
+
+// Cursor changed to a question mark when it has a title
+abbr[title]:hover
+    cursor: help;
+
+
+
+/* ==========================================================================
+   Base blockquote styles
+   ========================================================================== */
 
 blockquote
-    font-size: type.blockquote.small.font-size; /* 20px / 16px */
-    line-height: type.blockquote.small.line-height; /* 25px / 20px */
+    margin-top: emRhythm(4)
+    margin-bottom: emRhythm(4)
+    margin-left: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: emRhythm(4)
+    border-left: $base-vertical-unit solid lighten(#000, 50%)
+    font-family: $type-serif-family;
 
-@media all and (min-width: breakpoints.large)
-    blockquote
-        font-size: type.blockquote.large.font-size; /* 24px / 16px = */
-        line-height: type.blockquote.large.line-height; /* 35px / 24px */
+    p
+        margin-bottom: emRhythm(2)
+
+    footer
+        cite
+            &:before
+              content: " – ";
+
+
+/* ==========================================================================
+   Base hr styles
+   ========================================================================== */
+
+// Creates horizontal rules that obey the baseline.
+// Zero outs the user agent border
+hr
+    margin-top: emRhythm(4)
+    margin-bottom: 0;
+    border: none;
+    border-top-color: $base-text-color;
+    border-top-style: solid;
+    rhythmBorderTop(1px, 4);
+
+
+
+/* ==========================================================================
+   Base styles for small, em, strong, pre, code, time
+   ========================================================================== */
+
+small,
+.font-small
+      setType(3, $ms-down1)
+
+em
+    font-style: italic;
+
+strong
+    font-weight: bold;
+
+pre,
+code
+    font-family: $type-mono-family;
+
+time,
+.time
+    text-transform: uppercase;

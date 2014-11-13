@@ -1,4 +1,23 @@
-type-font-size(sel, bps)
-    for bp in bps
-        {sel}
-            content: "{sel}";
+fontSize($_font-size = $base-font-size, $_unit = $base-unit)
+    if isNotNull($_font-size)
+        if $_unit == 'rem'
+            add-property(font-size, rem($_font-size));
+            add-property(font-size, $_font-size);
+        else
+            add-property(font-size, em($_font-size));
+    else
+        error('invalid font-size')
+
+
+lineHeight($_font-size)
+    if isNotNull($_font-size)
+        add-property(line-height, remove-unit($base-line-height / $_font-size));
+
+
+// Vertical Rhythm Margin based on gridlover
+vrMargin($_line-height, $_unit = $base-unit)
+    if isNotNull($_line-height)
+        $_margin-top    = remove-unit($_line-height / 2);
+        $_margin-bottom = remove-unit($_margin-top / 2);
+        add-property(margin-top, s('%s%s', $_margin-top, unquote($_unit)));
+        add-property(margin-bottom, s('%s%s', $_margin-bottom, unquote($_unit)));

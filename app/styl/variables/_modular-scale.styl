@@ -1,0 +1,36 @@
+// =============================================================================
+// COMPONENT : Modular Scale
+// IDENTIFIER: modular-scale
+// SECTION   : Variables
+// =============================================================================
+
+modular-scale = {}
+
+// Modular scale ratio that is used to figure out all the different font sizes
+modular-scale['ratio'] = ks-perfect-fourth;
+modular-scale['vertical-unit'] = 6px;
+
+
+// The value that multiplies the $base-vertical-unit to get the $base-line-height.
+// This gives type an ideal line-height.
+modular-scale['line-multi'] = 4;
+
+
+// Generates modular scale values in Ems.
+// [Note]If you need more size up and/or down
+// then add more sizes.
+// [1] One step down in the modular scale in EMs
+// [2] Two steps down in the modular scale in EMs
+// [3] Three steps down in the modular scale in EMs
+// [4] One step up in the modular scale in EMs
+// [5] Two steps up in the modular scale in EMs
+// [6] Three steps up in the modular scale in EMs
+// [7] Four steps up in the modular scale in EMs
+$em-font-size = em(type.font-size)
+modular-scale['down1'] = $em-font-size / modular-scale.ratio; // [1]
+modular-scale['down2'] = modular-scale['down1'] /modular-scale.ratio; // [2]
+modular-scale['down3'] = modular-scale['down2'] / modular-scale.ratio; // [3]
+modular-scale['up1']   = $em-font-size * modular-scale.ratio; // [4]
+modular-scale['up2']   = modular-scale['up1'] * modular-scale.ratio; // [5]
+modular-scale['up3']   = modular-scale['up2'] * modular-scale.ratio; // [6]
+modular-scale['up4']   = modular-scale['up3'] * modular-scale.ratio; // [7]

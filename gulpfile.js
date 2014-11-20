@@ -17,11 +17,12 @@
 
 
 var gulp        = require('gulp');
-var plugins     = require('gulp-load-plugins')(); //[1]
-var runSequence = require('run-sequence'); //[2]
+var plugins     = require('gulp-load-plugins')(); // 1
+var runSequence = require('run-sequence'); // 2
 var pkg         = require('./package.json');
 var browserSync = require('browser-sync');
-var koutoSwiss  = require('kouto-swiss'); //[3]
+var koutoSwiss  = require('kouto-swiss'); // 3
+var argv        = require('yargs').argv;
 var reload      = browserSync.reload;
 
 var APP_DIR         = 'app';
@@ -43,9 +44,9 @@ gulp.task('dev-styles', function() {
                 inline: true
             }
         }))
-        .pipe(plugins.pleeease({
-            minifier: false
-        }))
+        // .pipe(plugins.pleeease({
+        //     minifier: false
+        // }))
         // .pipe(plugins.minifyCss({keepBreaks:true})) // source map would be removed
         .pipe(gulp.dest(BUILD_DIR+ '/css'));
 });
@@ -88,7 +89,7 @@ gulp.task('compile-scripts', ['jshint'], function() {
 
 // Optimize Images
 gulp.task('images', function () {
-    return gulp.src('app/**/*.{png,jpg,svg}')
+    return gulp.src(APP_DIR+ '/**/*.{png,jpg,svg}')
         .pipe(plugins.cache(plugins.imagemin({
             progressive: true,
             interlaced: true
@@ -104,28 +105,49 @@ gulp.task('images', function () {
 /// HTML
 ////////////////////////////////////////////////////////////////////////////////
 gulp.task('templates', function() {
-  var YOUR_LOCALS = {};
+    var YOUR_LOCALS = {};
 
-  gulp.src(APP_DIR+ '/patterns/pages/**/*.jade')
-    .pipe(plugins.jade({
-      locals: YOUR_LOCALS
-    }))
-    .pipe(gulp.dest(BUILD_DIR));
+    return gulp.src(APP_DIR+ '/patterns/pages/**/*.jade')
+        .pipe(plugins.jade({
+            locals: YOUR_LOCALS
+        }))
+        .pipe(gulp.dest(BUILD_DIR));
 });
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+/// TEST
+////////////////////////////////////////////////////////////////////////////////
+// e.g gulp test --type components --name type
+gulp.task('test',  function(){
+    return gulp.src(
+            plugins.if(argv.type, '/styl/' +argv.type+ '/' +argv.name+ '/test.styl')
+        )
+        .pipe(plugins.stylus({
+                linenos: false,
+                use: koutoSwiss(),
+                sourcemap: {
+                    inline: true
+                }
+            }))
+        .pipe(gulp.dest(BUILD_DIR+ '/test/' +argv.type+ '/' +argv.name+ '/test.styl'));
+});
+
 
 
 
 // Copy Other Files
 gulp.task('copy', function() {
-    gulp.src([
-        APP_DIR+ '/.htaccess',
-        APP_DIR+ '/browserconfig.xml',
-        APP_DIR+ '/crossdomain.xml',
-        APP_DIR+ '/humans.txt',
-        APP_DIR+ '/robots.txt',
-        APP_DIR+ '/favicon.ico',
+    return gulp.src([
+            APP_DIR+ '/.htaccess',
+            APP_DIR+ '/browserconfig.xml',
+            APP_DIR+ '/crossdomain.xml',
+            APP_DIR+ '/humans.txt',
+            APP_DIR+ '/robots.txt',
+            APP_DIR+ '/favicon.ico',
         ])
-    .pipe(gulp.dest(BUILD_DIR));
+        .pipe(gulp.dest(BUILD_DIR));
 });
 
 

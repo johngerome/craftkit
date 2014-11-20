@@ -6,3 +6,5 @@
  - http://blog.typekit.com/2011/11/09/type-study-sizing-the-legible-letter/
  - http://gregrickaby.com/using-the-golden-ratio-and-rems/
  - http://www.gridlover.net/app/
+ - Principles of writing consistent, idiomatic CSS -https://github.com/necolas/idiomatic-css
+ - Style tools for UI components - http://suitcss.github.io/

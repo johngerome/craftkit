@@ -1,0 +1,8 @@
+// An Easy Way of Caching Values in Stylus. Oh! it's also the cleaner way.
+// _c <property> <value>
+// @param property $p css property
+// @param value $v property value
+// @return css declarations
+_c($p, $v)
+    +cache('c' + $p + $v)
+        add-property($p, $v)

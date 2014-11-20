@@ -1,0 +1,60 @@
+// The tools that you can use throughout your project to set
+// all the wonderful type related stuffs.
+// Sets the type in EMs and makes a vertical rhythm unitless line-height that is
+// based on context.
+setType($_lines = modular-scale.line-multi, $_font-size = em(type.font-size))
+  font-size   : $_font-size;
+  line-height : unitlessRhythm($_lines, $_font-size);
+
+// Creates a vertical rhythm unitless line-height that is based on context
+setLeading($_lines = modular-scale.line-multi, $_font-size = em(type.font-size))
+  line-height : unitlessRhythm($_lines, $_font-size);
+
+// Creates a pixel width border top with padding that is a multiple of the base
+// vertical grid unit. You will need to set border style and color rules.
+rhythmBorderTop($_border-width = 1px, $_lines = modular-scale.line-multi, $_font-size = em(type.font-size))
+  border-top-width : $_border-width;
+  padding-top      : ((($_lines * remove-unit(modular-scale.vertical-unit)) - remove-unit($_border-width)) / (remove-unit($_font-size) * remove-unit(type.font-size)) + 0em);
+
+// Creates a pixel width border bottom with padding that is a multiple of the base
+// vertical grid unit. You will need to set border style and color rules.
+rhythmBorderBottom($_border-width = 1px, $_lines = modular-scale.line-multi, $_font-size = em(type.font-size))
+  border-bottom-width : $border-width;
+  padding-bottom      : ((($_lines * remove-unit(modular-scale.vertical-unit)) - remove-unit($_border-width)) / (remove-unit($_font-size) * remove-unit(type.font-size)) + 0em)
+
+// Creates a pixel width border with padding that is a multiple of the base
+// vertical grid unit. You will need to set border style and color rules.
+rhythmBorder($_border-width = 1px, $_lines = modular-scale.line-multi, $font-size = em(type.font-size))
+  border-width : $_border-width;
+  padding      : ((($_lines * remove-unit(modular-scale.vertical-unit)) - remove-unit($_border-width)) / (remove-unit($_font-size) * remove-unit(type.font-size)) + 0em);
+
+// Creates base type baseline overlay and vertical unit overlay.
+// To use on the body tag for example: body { debug-vertical-alignment(); } and add class va-debug to the body tag
+debug-vertical-alignment($opacity = 0.8, $vertical-unit = modular-scale.vertical-unit, $type-base-line-multi = modular-scale.line-multi, $type-size = em(type.font-size))
+  position : relative;
+  &:before, &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    display: none;
+  }
+  &:before {
+    z-index: 10;
+    background-image: -webkit-linear-gradient(rgba(233, 0, 0, $opacity) 1px, rgba(0, 0, 0, 0) 1px);
+    background-image: linear-gradient(rgba(233, 0, 0, $opacity) 1px, rgba(0, 0, 0, 0) 1px);
+    background-size: 100% (unitlessRhythm($type-base-line-multi, $type-size) + 0rem);
+  }
+  &:after {
+    z-index: 9;
+    background-image: -webkit-linear-gradient(rgba(0, 233, 0, $opacity) 1px, rgba(0, 0, 0, 0) 1px);
+    background-image: linear-gradient(rgba(0, 233, 0, $opacity) 1px, rgba(0, 0, 0, 0) 1px);
+    background-size: 100% $vertical-unit;
+  }
+  &.va-debug:before, &.va-debug:after {
+    display: block;
+    pointer-events: none;
+  }

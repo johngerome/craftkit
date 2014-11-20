@@ -1,0 +1,14 @@
+
+@import 'index'
+
+language = {
+  'eng': {
+    'component-not-found': 'Component `%s` not found.'
+    'object-not-in-component': "Object `%s` doesn't exist on a Component `%s`."
+  }
+}
+
+
+.test-lang {
+    content: lang(component-not-found)
+}

@@ -1,0 +1,3 @@
+// Returns an EM value. For example 24px becomes 1.5em
+emCalc($_target, $_context = Type.font-size)
+  remove-unit(($_target / $_context)) + 0em

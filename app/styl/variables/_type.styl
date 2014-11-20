@@ -1,0 +1,24 @@
+// =============================================================================
+// COMPONENT: Type
+// SECTION  : Variables
+// =============================================================================
+
+type = {
+    font-smoothing : true
+    font-size      : 16px
+    line-height    : 20px
+    mono-family    : font-stack('Lucida Console')
+    serif-family   : font-stack('Georgia')
+    sans-family    : font-stack("Helvetica")
+
+    // [1] Paragraph setting that you can turn on or off the indent of the first line
+    // of a new paragraph.
+    // [2] Paragraph setting that you can turn on or off to have your paragraphs ragged
+    // right or justified.
+
+    paragraph-indent  : true // [1]
+    paragraph-justify : true // [2]
+}
+
+type['font-family']    = type.sans-family
+type['heading-family'] = type.serif-family

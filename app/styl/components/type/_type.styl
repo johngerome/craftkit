@@ -1,3 +1,9 @@
+// =============================================================================
+// COMPONENT: Type
+// SECTION  : Main
+// =============================================================================
+
+
 /* ==========================================================================
    Box Sizing
    Source: http://www.paulirish.com/2012/box-sizing-border-box-ftw/
@@ -13,7 +19,7 @@
 
 /* set 100% = 16px default font-size on all browser */
 html
-    font-size : (remove-unit($base-font-size) / remove-unit(16px)) * 100%;
+    font-size : (remove-unit(type.font-size) / remove-unit(16px)) * 100%;
     /* Stops devices from scaling up text. */
     -webkit-text-size-adjust : 100%;
     -ms-text-size-adjust     : 100%;
@@ -43,7 +49,7 @@ h6, .h6
     margin-top: 0;
     padding-top: 0;
     padding-bottom: 0;
-    font-family: $type-heading-family;
+    font-family: type.heading-family;
 
 
 
@@ -51,12 +57,12 @@ h6, .h6
 body
     margin      : 0;
     padding     : 0;
-    font-family : $base-font-family
+    font-family : type.font-family
     font-weight : 400;
-    color       : $base-text-color;
+    color       : color.text;
 
-    if $type-font-smoothing
-        // optional
+    // optional
+    if type.font-smoothing
         text-shadow: 0 -1px 1px alpha(#fff, 0.01);
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
@@ -64,9 +70,9 @@ body
     setLeading();
 
 
-@media all and (min-width: breakpoints.medium)
+@media all and (min-width: breakpoint.medium)
     body
-        font-size: $base-font-size /* equivalent to 16px */
+        font-size: type.font-size /* equivalent to 16px */
         line-height: 1.375; /* equivalent to 22px */
 
 
@@ -77,10 +83,10 @@ body
    Source: http://sixrevisions.com/usability/hyperlink-design/
    ========================================================================== */
 a
-    color:$base-link-color;
+    color:color.link;
 
     &:hover, &:focus
-        color: $base-link-hover-color;
+        color: color.hover-link;
 
 
 
@@ -89,43 +95,43 @@ a
    ========================================================================== */
 
 h1, .h1
-    margin-bottom: emRhythm(1, $ms-up2)
-    setType(6, $ms-up2)
+    margin-bottom: emRhythm(1, modular-scale.up2)
+    setType(6, modular-scale.up2)
 
-    @media (min-width: breakpoints.medium)
-        margin-bottom: emRhythm(1, $ms-up3)
-        setType(8, $ms-up3)
+    @media (min-width: breakpoint.medium)
+        margin-bottom: emRhythm(1, modular-scale.up3)
+        setType(8, modular-scale.up3)
 
-    @media (min-width: breakpoints.large)
-        margin-bottom: emRhythm(1, $ms-up4)
-        setType(10, $ms-up4)
+    @media (min-width: breakpoint.large)
+        margin-bottom: emRhythm(1, modular-scale.up4)
+        setType(10, modular-scale.up4)
 
 
 h2, .h2
-    margin-bottom: emRhythm(1, $ms-up1)
-    setType(5, $ms-up1)
+    margin-bottom: emRhythm(1, modular-scale.up1)
+    setType(5, modular-scale.up1)
 
-    @media (min-width: breakpoints.medium)
-        margin-bottom: emRhythm(1, $ms-up2)
-        setType(6, $ms-up2)
+    @media (min-width: breakpoint.medium)
+        margin-bottom: emRhythm(1, modular-scale.up2)
+        setType(6, modular-scale.up2)
 
-    @media (min-width: breakpoints.large)
-        margin-bottom: emRhythm(1, $ms-up3)
-        setType(8, $ms-up3);
+    @media (min-width: breakpoint.large)
+        margin-bottom: emRhythm(1, modular-scale.up3)
+        setType(8, modular-scale.up3);
 
 
 h3, .h3
-    margin-bottom: emRhythm(1, $ms-up1)
-    setType(5, $ms-up1)
+    margin-bottom: emRhythm(1, modular-scale.up1)
+    setType(5, modular-scale.up1)
 
-    @media (min-width: breakpoints.large)
-        margin-bottom: emRhythm(1, $ms-up2)
-        setType(6, $ms-up2)
+    @media (min-width: breakpoint.large)
+        margin-bottom: emRhythm(1, modular-scale.up2)
+        setType(6, modular-scale.up2)
 
 
 h4, .h4
-    margin-bottom: emRhythm(1, $ms-up1)
-    setType(5, $ms-up1)
+    margin-bottom: emRhythm(1, modular-scale.up1)
+    setType(5, modular-scale.up1)
 
 
 h5, .h5,
@@ -141,10 +147,10 @@ h6, .h6
 
 p
     margin-top: 0;
-    margin-bottom: emRhythm($base-line-multi)
+    margin-bottom: emRhythm(modular-scale.line-multi)
     padding-top: 0;
     padding-bottom: 0;
-    max-width: emRhythm(96);
+    // max-width: emRhythm(96);
     -webkit-hyphens: auto;
     -epub-hyphens: auto;
     -moz-hyphens: auto;
@@ -153,15 +159,15 @@ p
     hyphens: auto;
     word-wrap: break-word;
 
-    @media (min-width: breakpoints.medium)
-        if $type-paragraph-justify
+    @media (min-width: breakpoint.medium)
+        if type.paragraph-justify
             text-align: justify
 
 
-    if $type-paragraph-indent
+    if type.paragraph-indent
         p + p
-            margin-top: emRhythm($base-line-multi * -1)
-            text-indent: emRhythm($base-line-multi)
+            margin-top: emRhythm(modular-scale.line-multi * -1)
+            text-indent: emRhythm(modular-scale.line-multi)
 
 
 
@@ -221,7 +227,7 @@ blockquote
     padding-top: 0;
     padding-bottom: 0;
     padding-left: emRhythm(4)
-    border-left: $base-vertical-unit solid lighten(#000, 50%)
+    border-left: modular-scale.vertical-unit solid lighten(#000, 50%)
     font-family: $type-serif-family;
 
     p
@@ -243,7 +249,7 @@ hr
     margin-top: emRhythm(4)
     margin-bottom: 0;
     border: none;
-    border-top-color: $base-text-color;
+    border-top-color: type.text;
     border-top-style: solid;
     rhythmBorderTop(1px, 4);
 
@@ -255,7 +261,7 @@ hr
 
 small,
 .font-small
-      setType(3, $ms-down1)
+      setType(3, modular-scale.down1)
 
 em
     font-style: italic;
@@ -265,8 +271,32 @@ strong
 
 pre,
 code
-    font-family: $type-mono-family;
+    font-family: type.mono-family;
 
 time,
 .time
     text-transform: uppercase;
+
+
+
+code, samp, kbd {
+  text-align: left;
+  color: color.text;
+
+  // source: http://css-tricks.com/snippets/css/make-pre-text-wrap/
+   white-space: pre-wrap;       /* css-3 */
+   white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+   white-space: -pre-wrap;      /* Opera 4-6 */
+   white-space: -o-pre-wrap;    /* Opera 7 */
+   word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+pre code {
+  line-height: 1.6em;
+}
+pre {
+  padding: 0.1em 0.5em 0.3em 0.7em;
+  border-left: 11px solid lighten(color.primary, 30%);
+  margin: 1.7em 0 1.7em 0.3em;
+  overflow: auto;
+  width: 93%;
+}

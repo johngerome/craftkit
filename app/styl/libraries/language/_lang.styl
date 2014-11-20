@@ -1,0 +1,8 @@
+
+// Main
+lang($_key, $_data = null, $_language = 'eng')
+  $_val = language[$_key]
+  if $_data != null
+    return $_val % $_data
+  else
+    return $_val

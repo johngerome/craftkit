@@ -1,0 +1,14 @@
+
+Grid-center($padding = 30px, $width = 600px)
+  _c(padding, 30px calc(50% - $width))
+
+
+Grid-equal-col($col = 2)
+  _c(padding, 1em)
+  _c(margin-bottom, 1em)
+
+  @media all and (min-width: breakpoint.medium)
+    overflow: hidden
+    & > div
+      _c(float, left)
+      _c(width, (100% / $col))

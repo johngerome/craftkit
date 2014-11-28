@@ -1,15 +1,15 @@
 {
-  "name": "gulpjs-starter",
+  "name": "frontend-starter-kit",
   "version": "1.0.0",
-  "description": "gulpfile starter template",
+  "description": "frontend starter kit",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "gulp"
   },
   "keywords": [
-    "gulpfile",
     "starter",
-    "boilerplate"
+    "boilerplate",
+    "frontend"
   ],
   "author": "John Gerome Baldonado <johngerome@gmail.com>",
   "license": "ISC",
@@ -40,6 +40,10 @@
     "kouto-swiss": "^0.11.2",
     "path": "^0.4.9",
     "run-sequence": "^1.0.1",
+    "yargs": "^1.3.3"
+  }
+}
+ "^1.0.1",
     "yargs": "^1.3.3"
   }
 }

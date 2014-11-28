@@ -28,25 +28,25 @@ column(ratios = 1, offset = 0, cycle = 0, uncycle = 0, gutter = jeet.gutter)
   _c(clear, none)
   _c(text-align, inherit)
   _c(width, (column-widths[0])%)
-  _c(margin-{side}, (margin-l)%)
-  _c(margin-{opposite-side}, (margin-r)%)
+  margin-{side}: (margin-l)%
+  margin-{opposite-side}: (margin-r)%
 
   if uncycle != 0
     &:nth-of-type({uncycle}n)
-        _c(margin-{opposite-side}, (margin-r)%)
+        margin-{opposite-side}: (margin-r)%
         _c(float, side)
     &:nth-of-type({uncycle}n+1)
         _c(clear, none)
 
   if cycle != 0
     &:nth-of-type({cycle}n)
-        _c(margin-{opposite-side}, (margin-last)%)
+        margin-{opposite-side}: (margin-last)%
         _c(float, opposite-side)
     &:nth-of-type({cycle}n+1)
         _c(clear, both)
   else
     &:last-child
-        _c(margin-{opposite-side}, (margin-last)%)
+        margin-{opposite-side}: (margin-last)%
 
 /**
  * An alias for the column mixin.

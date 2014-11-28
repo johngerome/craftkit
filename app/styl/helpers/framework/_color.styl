@@ -1,0 +1,22 @@
+
+// @source = http://codepen.io/bluesaunders/pen/FCLaz/
+
+$default-dark-text  = #333;
+$default-light-text = #fff;
+
+// Calculeate brightness of a given color.
+brightness($color)
+  return ((red($color) * .299) + (green($color) * .587) + (blue($color) * .114)) / 255 * 100%;
+
+
+// Compares contrast of a given color to the light/dark arguments and returns whichever is most "contrasty"
+color-contrast($color, $dark = $default-dark-text, $light = $default-light-text)
+  if $color == null
+    error('Invalid ' + $color + ' in color-contrast')
+  else
+    $color-brightness      = brightness($color);
+    $light-text-brightness = brightness($light);
+    $dark-text-brightness  = brightness($dark);
+
+    (abs($color-brightness - $light-text-brightness) > abs($color-brightness - $dark-text-brightness)) ? $light : $dark;
+

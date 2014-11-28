@@ -1,18 +1,29 @@
-extend ./../../includes/layout.jade
-
-block head
-    style.
-      .to-top{
-        display: inline-block;
-      }
-
-
+extend ./includes/layout.jade
 
 block title
-    Typography
-
+    title Index Page
 
 block content
+  div.ButtonContainer
+    h1 Buttons
+    p Buttons are convenient tools when you need more traditional actions
+    div.buttons
+      button primary button
+      button.btn-secondary secondary button
+      button.btn-tertiary tertiary button
+      button.btn-quadrary quadrary button
+    div.buttons
+      h3 small
+      button(class="btn-small") primary small button
+      button(class="btn-secondary btn-small") secondary small button
+      button(class="btn-tertiary btn-small") tertiary small button
+      button(class="btn-quadrary btn-small") quadrary small button
+    div.buttons
+      h3 large
+      button(class="btn-large") primary large button
+      button(class="btn-secondary btn-large") secondary large button
+      button(class="btn-tertiary btn-large") tertiary large button
+      button(class="btn-quadrary btn-large") quadrary large button
   div.TypContainer
     h1 CSS Basic Elements
     p

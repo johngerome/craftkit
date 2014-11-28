@@ -1,0 +1,57 @@
+// =============================================================================
+// COMPONENT: Button
+// SECTION  : _button
+// SOURCE   : https://github.com/google/web-starter-kit/blob/master/app/styles/components/_components/_button.scss
+// =============================================================================
+
+
+$btn-extras
+    cursor: pointer;
+    text-decoration: none;
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+    vertical-align: top;
+
+$btn-transition
+    transition: background 300ms ease-out;
+
+$btn-base
+    // base
+    display: inline-block;
+    margin-bottom: type.line-height / 2;
+    margin-top: type.line-height / 2;
+    min-height: type.line-height;
+    text-align: center;
+    font-family: type.font-family;
+    font-weight: 600;
+    text-decoration: none;
+    outline: 0;
+
+
+
+// Mixin to create buttons
+Button($size = medium, $color = null, $textColor = color.text)
+    if $size
+        // size
+        padding: em((type.line-height / 2) - 1) em(32px);
+
+        if $size == small
+            _c(font-size, button.size.small)
+        else if $size == medium
+            _c(font-size, button.size.medium)
+        else if $size == large
+            _c(font-size, button.size.large)
+
+    if $color
+        background: $color;
+        color: color-contrast(@background);
+        border: 1px solid darken(@background, 20%);
+
+         &:hover {
+            background: darken(@background, 30%);
+            text-decoration: none;
+        }
+
+        @extend $btn-base
+        @extend $btn-extras
+        @extend $btn-transition

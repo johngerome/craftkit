@@ -36,7 +36,7 @@ var BUILD_DIR       = 'dist';
 ////////////////////////////////////////////////////////////////////////////////
 
 gulp.task('dev-styles', function() {
-    return gulp.src(APP_DIR+ '/styl/app.styl')
+    return gulp.src([APP_DIR+ '/styl/app.styl', APP_DIR+ '/styl/doc.styl'])
         .pipe(plugins.stylus({
             linenos: false,
             use: koutoSwiss(),
@@ -52,7 +52,7 @@ gulp.task('dev-styles', function() {
 });
 
 gulp.task('prod-styles', function() {
-    return gulp.src(APP_DIR+ '/styl/app.styl')
+    return gulp.src([APP_DIR+ '/styl/app.styl', APP_DIR+ '/styl/doc.styl'])
         .pipe(plugins.stylus({
             use: koutoSwiss()
         }))

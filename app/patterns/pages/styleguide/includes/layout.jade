@@ -1,0 +1,32 @@
+include ./variables.jade
+html(lang="en")
+    head
+        meta(charset="utf-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+
+        block title
+            title pageTitle
+
+        each dns in dnsPrefetch
+            link(rel="dns-prefetch", href="#{dns}")
+
+        link(rel="apple-touch-icon", href="apple-touch-icon.png")
+
+        each style in stylesheets
+            link(type="text/css", rel="stylesheet", href="../css/#{style}")
+
+        script(src="//cdn.jsdelivr.net/modernizr/2.8.3/modernizr.min.js")
+
+        meta(name="description", content="#{meta.description}")
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+
+        block head
+
+    body
+        <!--[if lt IE 8]>
+        p.browserupgrade You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        block content
+
+        script(src="//cdn.jsdelivr.net/jquery/2.1.1/jquery.min.js")

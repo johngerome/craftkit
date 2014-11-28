@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "frontend starter kit",
   "main": "gulpfile.js",
-  "scripts": {
-    "test": "gulp"
-  },
   "keywords": [
     "starter",
     "boilerplate",
@@ -43,4 +40,3 @@
     "yargs": "^1.3.3"
   }
 }
-

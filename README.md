@@ -3,7 +3,7 @@
 
 A Starter Kit that's been tailored to leverage the latest tools and technologies for building fast, maintainable, scalable, adaptive sites with Performance in Mind.
 
-## Resources
+## References
 
 ### Style Guide
  - [Principles of writing consistent, idiomatic CSS](https://github.com/necolas/idiomatic-css)

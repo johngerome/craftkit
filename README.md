@@ -1,5 +1,7 @@
-#Frontend Web Development Starter Kit 
+#Craftkit
 [![Build Status](https://travis-ci.org/johngerome/frontend-starter-kit.svg?branch=master)](https://travis-ci.org/johngerome/frontend-starter-kit)
+
+A Web Development Starter Kit that's been tailored to leverage the latest tools and technologies for building fast, maintainable, scalable, adaptive sites with Performance in Mind.
 
 ## Resources
 

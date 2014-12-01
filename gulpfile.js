@@ -28,37 +28,64 @@ var reload      = browserSync.reload;
 var APP_DIR         = 'app';
 var BUILD_DIR       = 'dist';
 
-
+var AUTOPREFIXER_BROWSERS = [
+  'ie >= 9',
+  'ie_mob >= 10',
+  'ff >= 30',
+  'chrome >= 34',
+  'safari >= 7',
+  'opera >= 23',
+  'ios >= 7',
+  'android >= 4.4',
+  'bb >= 10'
+];
 
 
 ////////////////////////////////////////////////////////////////////////////////
 /// STYLESHEETS
 ////////////////////////////////////////////////////////////////////////////////
 
-gulp.task('dev-styles', function() {
-    return gulp.src([APP_DIR+ '/styl/app.styl', APP_DIR+ '/styl/doc.styl'])
+// Stylus to CSS
+gulp.task('stylus-css', function() {
+    return gulp.src([APP_DIR+ '/styl/app.styl'])
         .pipe(plugins.stylus({
-            linenos: false,
             use: koutoSwiss(),
-            sourcemap: {
-                inline: true
-            }
         }))
-        // .pipe(plugins.pleeease({
-        //     minifier: false
-        // }))
-        // .pipe(plugins.minifyCss({keepBreaks:true})) // source map would be removed
         .pipe(gulp.dest(BUILD_DIR+ '/css'));
 });
 
-gulp.task('prod-styles', function() {
-    return gulp.src([APP_DIR+ '/styl/app.styl', APP_DIR+ '/styl/doc.styl'])
-        .pipe(plugins.stylus({
-            use: koutoSwiss()
-        }))
-        .pipe(plugins.pleeease())
+//
+gulp.task('style-improvement', function(){
+    return gulp.src([BUILD_DIR+ '/css/**/*.css'])
+    .pipe(plugins.pleeease({
+            browsers: AUTOPREFIXER_BROWSERS,
+            minifier: false
+    }))
+    .pipe(gulp.dest(BUILD_DIR+ '/css'));
+});
+
+//
+gulp.task('style-minify', function() {
+    return gulp.src([BUILD_DIR+ '/css/**/*.css'])
         .pipe(plugins.minifyCss())
         .pipe(gulp.dest(BUILD_DIR+ '/css'));
+});
+
+// Development
+gulp.task('dev-styles', function(done) {
+    runSequence(
+        'stylus-css',
+        'style-improvement'
+    ,done);
+});
+
+// Production
+gulp.task('prod-styles', function(done) {
+    runSequence(
+        'stylus-css',
+        'style-improvement',
+        'style-minify'
+    ,done);
 });
 
 

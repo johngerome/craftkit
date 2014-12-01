@@ -67,6 +67,15 @@ gulp.task('prod-styles', function() {
 /// SCRIPTS
 ////////////////////////////////////////////////////////////////////////////////
 
+// Build Custom modernizr.js for better performance
+gulp.task('build-modernizr', function() {
+  gulp.src([BUILD_DIR+ '/js/**/*.js', BUILD_DIR+ '/css/**/*.css'])
+    .pipe(plugins.modernizr())
+    .pipe(plugins.uglify())
+    .pipe(gulp.dest(BUILD_DIR+ '/js'))
+});
+
+//
 gulp.task('jshint', function () {
   return gulp.src(APP_DIR+ '/js/**/*.js')
     .pipe(reload({stream: true, once: true}))
@@ -75,7 +84,7 @@ gulp.task('jshint', function () {
     .pipe(plugins.if(!browserSync.active, plugins.jshint.reporter('fail')));
 });
 
-// Lint JS then copy it to build directory
+// compile all scripts
 gulp.task('compile-scripts', ['jshint'], function() {
     return gulp.src(APP_DIR+ '/js/**/*.js')
         .pipe(plugins.uglify())
@@ -137,8 +146,8 @@ gulp.task('test',  function(){
 
 
 
-// Copy Other Files
-gulp.task('copy', function() {
+// Copy Extra Files
+gulp.task('copy-extra-files', function() {
     return gulp.src([
             APP_DIR+ '/.htaccess',
             APP_DIR+ '/browserconfig.xml',
@@ -186,16 +195,20 @@ gulp.task('serve', function () {
 gulp.task('build', function(done) {
     runSequence(
         'clean',
-        ['prod-styles', 'compile-scripts', 'images', 'templates', 'copy'],
-    done);
+        ['prod-styles', 'images', 'templates', 'compile-scripts'],
+        'copy-extra-files',
+        'build-modernizr'
+    ,done);
 });
 
 gulp.task('development', function(done) {
     runSequence(
         'clean',
-        ['dev-styles', 'compile-scripts', 'images', 'templates', 'copy'],
-        'serve',
-    done);
+        ['dev-styles', 'images', 'templates', 'compile-scripts'],
+        'copy-extra-files',
+        'build-modernizr',
+        'serve'
+    ,done);
 });
 
 

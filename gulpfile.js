@@ -149,10 +149,10 @@ gulp.task('images', function () {
 ////////////////////////////////////////////////////////////////////////////////
 /// HTML
 ////////////////////////////////////////////////////////////////////////////////
-gulp.task('templates', function() {
+gulp.task('html', function() {
     var YOUR_LOCALS = {};
 
-    return gulp.src(APP_DIR+ '/patterns/pages/**/*.jade')
+    return gulp.src(APP_DIR+ '/html/patterns/pages/**/*.jade')
         .pipe(plugins.jade({
             locals: YOUR_LOCALS
         }))
@@ -217,7 +217,7 @@ gulp.task('serve', function () {
     // https: true,
     server: [BUILD_DIR]
   });
-    gulp.watch(APP_DIR+ '/**/*.jade', ['templates', reload]);
+    gulp.watch(APP_DIR+ '/**/*.jade', ['html', reload]);
     gulp.watch(APP_DIR+ '/**/*.styl', ['dev-styles', reload]);
     gulp.watch(APP_DIR+ '/js/**/*.js', ['jshint']);
     gulp.watch(APP_DIR+ '/images/**/*', reload);
@@ -231,7 +231,7 @@ gulp.task('serve', function () {
 gulp.task('build', function(done) {
     runSequence(
         'clean',
-        ['prod-styles', 'images', 'templates', 'compile-scripts'],
+        ['prod-styles', 'images', 'html', 'compile-scripts'],
         'copy-extra-files',
         'build-modernizr'
     ,done);
@@ -240,7 +240,7 @@ gulp.task('build', function(done) {
 gulp.task('development', function(done) {
     runSequence(
         'clean',
-        ['dev-styles', 'images', 'templates', 'compile-scripts'],
+        ['dev-styles', 'images', 'html', 'compile-scripts'],
         'copy-extra-files',
         'build-modernizr',
         'serve'

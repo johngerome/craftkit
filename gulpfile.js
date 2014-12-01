@@ -44,10 +44,9 @@ var AUTOPREFIXER_BROWSERS = [
 ////////////////////////////////////////////////////////////////////////////////
 /// STYLESHEETS
 ////////////////////////////////////////////////////////////////////////////////
-
 // Stylus to CSS
 gulp.task('stylus-css', function() {
-    return gulp.src([APP_DIR+ '/styl/app.styl'])
+    return gulp.src([APP_DIR+ '/css/styl/*.styl'])
         .pipe(plugins.stylus({
             use: koutoSwiss(),
         }))
@@ -125,6 +124,8 @@ gulp.task('compile-scripts', ['jshint'], function() {
         .pipe(plugins.uglify())
         .pipe(gulp.dest(BUILD_DIR+ '/js'));
 });
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////////

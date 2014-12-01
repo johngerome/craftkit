@@ -71,11 +71,19 @@ gulp.task('style-minify', function() {
         .pipe(gulp.dest(BUILD_DIR+ '/css'));
 });
 
+// Validating css
+gulp.task('style-lint', function() {
+    return gulp.src([BUILD_DIR+ '/css/**/*.css'])
+        .pipe(plugins.csslint())
+        .pipe(plugins.csslint.reporter());
+});
+
 // Development
 gulp.task('dev-styles', function(done) {
     runSequence(
         'stylus-css',
-        'style-improvement'
+        'style-improvement',
+        'style-lint'
     ,done);
 });
 

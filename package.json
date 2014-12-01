@@ -1,7 +1,7 @@
 {
-  "name": "frontend-starter-kit",
+  "name": "craftkit",
   "version": "1.0.0",
-  "description": "frontend starter kit",
+  "description": "A Starter Kit that's been tailored to leverage the latest tools and technologies for building fast, maintainable, scalable, adaptive sites with Performance in Mind",
   "main": "gulpfile.js",
   "keywords": [
     "starter",

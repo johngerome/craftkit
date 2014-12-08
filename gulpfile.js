@@ -23,6 +23,7 @@ var pkg         = require('./package.json');
 var browserSync = require('browser-sync');
 var koutoSwiss  = require('kouto-swiss'); // 3
 var argv        = require('yargs').argv;
+var glob        = require('glob');
 var reload      = browserSync.reload;
 
 var APP_DIR         = 'app';
@@ -55,10 +56,13 @@ gulp.task('stylus-css', function() {
 
 //
 gulp.task('style-improvement', function(){
-    return gulp.src([BUILD_DIR+ '/css/**/*.css'])
+    return gulp.src([BUILD_DIR+ '/css/style.css'])
     .pipe(plugins.pleeease({
             browsers: AUTOPREFIXER_BROWSERS,
             minifier: false
+    }))
+    .pipe(plugins.uncss({
+            html: glob.sync(BUILD_DIR+ '/**/*.html')
     }))
     .pipe(gulp.dest(BUILD_DIR+ '/css'));
 });
@@ -70,12 +74,13 @@ gulp.task('style-minify', function() {
         .pipe(gulp.dest(BUILD_DIR+ '/css'));
 });
 
-// Validating css
+// Validating CSS
 gulp.task('style-lint', function() {
     return gulp.src([BUILD_DIR+ '/css/**/*.css'])
         .pipe(plugins.csslint())
         .pipe(plugins.csslint.reporter());
 });
+
 
 // Development
 gulp.task('dev-styles', function(done) {
@@ -161,6 +166,7 @@ gulp.task('html', function() {
 
 
 
+
 ////////////////////////////////////////////////////////////////////////////////
 /// TEST
 ////////////////////////////////////////////////////////////////////////////////
@@ -231,7 +237,8 @@ gulp.task('serve', function () {
 gulp.task('build', function(done) {
     runSequence(
         'clean',
-        ['prod-styles', 'images', 'html', 'compile-scripts'],
+        'html',
+        ['prod-styles', 'images', 'compile-scripts'],
         'copy-extra-files',
         'build-modernizr'
     ,done);
@@ -240,7 +247,8 @@ gulp.task('build', function(done) {
 gulp.task('development', function(done) {
     runSequence(
         'clean',
-        ['dev-styles', 'images', 'html', 'compile-scripts'],
+        'html',
+        ['dev-styles', 'images', 'compile-scripts'],
         'copy-extra-files',
         'build-modernizr',
         'serve'

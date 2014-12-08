@@ -1,33 +1,20 @@
 // GulpJS Documentation -> http://goo.gl/woLzJq
-//
-////////////////////////////////////////////////////////////////////////////////
-//  GULP PLUGINS
-////////////////////////////////////////////////////////////////////////////////
-//
-// [1] gulp-load-plugins : Load all gulp plugins automatically and attach them
-//                         to the `plugins` object.
-// [2] run-sequence      : Temporary solution until gulp 4.
-//                         https://github.com/gulpjs/gulp/issues/355
-// [3] kouto-swiss       : A Complete CSS framework for Stylus
-//                         http://kouto-swiss.io/docs.html
-// see package.json file for more plugins
-////////////////////////////////////////////////////////////////////////////////
 
 'use strict';
 
 
 var gulp        = require('gulp');
-var plugins     = require('gulp-load-plugins')(); // 1
-var runSequence = require('run-sequence'); // 2
+var plugins     = require('gulp-load-plugins')();
+var runSequence = require('run-sequence');
 var pkg         = require('./package.json');
 var browserSync = require('browser-sync');
-var koutoSwiss  = require('kouto-swiss'); // 3
+var koutoSwiss  = require('kouto-swiss');
 var argv        = require('yargs').argv;
 var glob        = require('glob');
 var reload      = browserSync.reload;
 
-var APP_DIR         = 'app';
-var BUILD_DIR       = 'dist';
+var APP_DIR     = 'app';
+var BUILD_DIR   = 'dist';
 
 var AUTOPREFIXER_BROWSERS = [
   'ie >= 9',
@@ -163,28 +150,6 @@ gulp.task('html', function() {
         }))
         .pipe(gulp.dest(BUILD_DIR));
 });
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-/// TEST
-////////////////////////////////////////////////////////////////////////////////
-// e.g gulp test --type components --name type
-gulp.task('test',  function(){
-    return gulp.src(
-            plugins.if(argv.type, '/styl/' +argv.type+ '/' +argv.name+ '/test.styl')
-        )
-        .pipe(plugins.stylus({
-                linenos: false,
-                use: koutoSwiss(),
-                sourcemap: {
-                    inline: true
-                }
-            }))
-        .pipe(gulp.dest(BUILD_DIR+ '/test/' +argv.type+ '/' +argv.name+ '/test.styl'));
-});
-
 
 
 

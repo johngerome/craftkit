@@ -11,6 +11,7 @@ var browserSync = require('browser-sync');
 var koutoSwiss  = require('kouto-swiss');
 var argv        = require('yargs').argv;
 var glob        = require('glob');
+var critical    = require('critical');
 var reload      = browserSync.reload;
 
 var APP_DIR     = 'app';
@@ -32,6 +33,7 @@ var AUTOPREFIXER_BROWSERS = [
 ////////////////////////////////////////////////////////////////////////////////
 /// STYLESHEETS
 ////////////////////////////////////////////////////////////////////////////////
+
 // Stylus to CSS
 gulp.task('stylus-css', function() {
     return gulp.src([APP_DIR+ '/css/styl/*.styl'])
@@ -61,6 +63,8 @@ gulp.task('style-minify', function() {
         .pipe(gulp.dest(BUILD_DIR+ '/css'));
 });
 
+
+
 // Validating CSS
 gulp.task('style-lint', function() {
     return gulp.src([BUILD_DIR+ '/css/**/*.css'])
@@ -69,12 +73,57 @@ gulp.task('style-lint', function() {
 });
 
 
+
+
+
+// Generating and inlining critical-path CSS
+
+// Copy our site styles to a site.css file
+// for async loading later
+gulp.task('copystyles', function () {
+    return gulp.src(['dist/css/style.css'])
+        .pipe(plugins.rename({
+            basename: "site"
+        }))
+        .pipe(gulp.dest('dist/css'));
+});
+
+gulp.task('critical', ['copystyles'], function () {
+    // At this point, we have our
+    // production styles in css/styles.css
+    // As we're going to overwrite this with
+    // our critical-path CSS let's create a copy
+    // of our site-wide styles so we can async
+    // load them in later. We do this with
+    // 'copystyles' above
+    critical.generate({
+        base: 'dist/',
+        src: 'index.html',
+        dest: 'css/site.css',
+        width: 320,
+        height: 480,
+        minify: true
+    }, function(err, output){
+        critical.inline({
+            base: 'dist/',
+            src: 'index.html',
+            dest: 'index-critical.html',
+            minify: true
+        });
+    });
+});
+
+
+
+
+
 // Development
 gulp.task('dev-styles', function(done) {
     runSequence(
         'stylus-css',
         'style-improvement',
-        'style-lint'
+        'style-lint',
+        'critical'
     ,done);
 });
 
@@ -83,7 +132,8 @@ gulp.task('prod-styles', function(done) {
     runSequence(
         'stylus-css',
         'style-improvement',
-        'style-minify'
+        'style-minify',
+        'critical'
     ,done);
 });
 

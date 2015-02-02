@@ -193,10 +193,16 @@ gulp.task('images', function () {
 ////////////////////////////////////////////////////////////////////////////////
 gulp.task('html', function() {
     var YOUR_LOCALS = {};
-
-    return gulp.src(APP_DIR+ '/html/patterns/pages/**/*.jade')
-        .pipe(plugins.jade({
-            locals: YOUR_LOCALS
+    return gulp.src(APP_DIR+ '/html/pages/*.twig')
+        .pipe(plugins.twig({
+            // data: {
+            //     title: 'Gulp and Twig',
+            //     benefits: [
+            //         'Fast',
+            //         'Flexible',
+            //         'Secure'
+            //     ]
+            // }
         }))
         .pipe(gulp.dest(BUILD_DIR));
 });

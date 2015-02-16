@@ -1,0 +1,17 @@
+{
+  "name": "craftkit",
+  "version": "1.0.0",
+  "description": "A Starter Kit that's been tailored to leverage the latest tools and technologies for building fast, maintainable, scalable, adaptive sites with Performance in Mind",
+  "homepage": "https://github.com/johngerome/craftkit",
+  "authors": [
+    "johngerome <johngerome@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

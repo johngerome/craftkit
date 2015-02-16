@@ -122,8 +122,7 @@ gulp.task('dev-styles', function(done) {
     runSequence(
         'stylus-css',
         'style-improvement',
-        'style-lint',
-        'critical'
+        'style-lint'
     ,done);
 });
 
@@ -132,8 +131,7 @@ gulp.task('prod-styles', function(done) {
     runSequence(
         'stylus-css',
         'style-improvement',
-        'style-minify',
-        'critical'
+        'style-minify'
     ,done);
 });
 
@@ -153,7 +151,7 @@ gulp.task('build-modernizr', function() {
 
 //
 gulp.task('jshint', function () {
-  return gulp.src(APP_DIR+ '/js/**/*.js')
+  return gulp.src(APP_DIR+ '/js/app/**/*.js')
     .pipe(reload({stream: true, once: true}))
     .pipe(plugins.jshint())
     .pipe(plugins.jshint.reporter('jshint-stylish'))
@@ -244,10 +242,9 @@ gulp.task('serve', function () {
     // https: true,
     server: [BUILD_DIR]
   });
-    gulp.watch(APP_DIR+ '/**/*.jade', ['html', reload]);
+    gulp.watch(APP_DIR+ '/**/*.twig', ['html', reload]);
     gulp.watch(APP_DIR+ '/**/*.styl', ['dev-styles', reload]);
     gulp.watch(APP_DIR+ '/js/**/*.js', ['jshint']);
-    gulp.watch(APP_DIR+ '/images/**/*', reload);
 });
 
 
@@ -259,9 +256,8 @@ gulp.task('build', function(done) {
     runSequence(
         'clean',
         'html',
-        ['prod-styles', 'images', 'compile-scripts'],
-        'copy-extra-files',
-        'build-modernizr'
+        ['prod-styles', 'compile-scripts'],
+        'copy-extra-files'
     ,done);
 });
 
@@ -269,13 +265,13 @@ gulp.task('development', function(done) {
     runSequence(
         'clean',
         'html',
-        ['dev-styles', 'images', 'compile-scripts'],
+        ['dev-styles', 'compile-scripts'],
         'copy-extra-files',
-        'build-modernizr',
         'serve'
     ,done);
 });
 
-
-
+gulp.task('bc', ['critical']) // build critical css path
+gulp.task('bm', ['build-modernizr']); // build modernizr
+gulp.task('img', ['images']); // compress images
 gulp.task('default', ['development']);

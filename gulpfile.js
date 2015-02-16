@@ -43,41 +43,43 @@ gulp.task('stylus-css', function() {
         .pipe(gulp.dest(BUILD_DIR+ '/css'));
 });
 
-//
+// * Group Media Queries
+// * Autoprefix Browsers
 gulp.task('style-improvement', function(){
     return gulp.src([BUILD_DIR+ '/css/style.css'])
     .pipe(plugins.pleeease({
             browsers: AUTOPREFIXER_BROWSERS,
             minifier: false
     }))
-    .pipe(plugins.uncss({
-            html: glob.sync(BUILD_DIR+ '/**/*.html')
-    }))
     .pipe(gulp.dest(BUILD_DIR+ '/css'));
 });
 
-//
+// Minify CSS
 gulp.task('style-minify', function() {
     return gulp.src([BUILD_DIR+ '/css/**/*.css'])
         .pipe(plugins.minifyCss())
         .pipe(gulp.dest(BUILD_DIR+ '/css'));
 });
 
-
-
-// Validating CSS
+// Validate CSS
 gulp.task('style-lint', function() {
     return gulp.src([BUILD_DIR+ '/css/**/*.css'])
         .pipe(plugins.csslint())
         .pipe(plugins.csslint.reporter());
 });
 
-
-
+// Remove unused CSS
+gulp.task('style-uncss', function() {
+    return gulp.src([BUILD_DIR+ '/css/style.css'])
+        .pipe(plugins.uncss({
+            html: glob.sync(BUILD_DIR+ '/**/*.html')
+        }))
+        .pipe(gulp.dest(BUILD_DIR+ '/css'));
+});
 
 
 // Generating and inlining critical-path CSS
-
+// -----------------------------------------
 // Copy our site styles to a site.css file
 // for async loading later
 gulp.task('copystyles', function () {
@@ -272,6 +274,7 @@ gulp.task('development', function(done) {
 });
 
 gulp.task('bc', ['critical']) // build critical css path
+gulp.task('uc', ['style-uncss']) // Remove unused css selector
 gulp.task('bm', ['build-modernizr']); // build modernizr
 gulp.task('img', ['images']); // compress images
 gulp.task('default', ['development']);

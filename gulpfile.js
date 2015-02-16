@@ -30,67 +30,51 @@ var AUTOPREFIXER_BROWSERS = [
 ];
 
 
+
+
+
 ////////////////////////////////////////////////////////////////////////////////
 /// STYLESHEETS
 ////////////////////////////////////////////////////////////////////////////////
 
 // Stylus to CSS
-gulp.task('stylus-css', function() {
-    return gulp.src([APP_DIR+ '/css/styl/*.styl'])
+gulp.task('css-styl', function() {
+    return gulp.src([APP_DIR+ '/css/styl/**/*.styl'])
         .pipe(plugins.stylus({
             use: koutoSwiss(),
         }))
-        .pipe(gulp.dest(BUILD_DIR+ '/css'));
-});
-
-// * Group Media Queries
-// * Autoprefix Browsers
-gulp.task('style-improvement', function(){
-    return gulp.src([BUILD_DIR+ '/css/style.css'])
-    .pipe(plugins.pleeease({
-            browsers: AUTOPREFIXER_BROWSERS,
-            minifier: false
-    }))
-    .pipe(gulp.dest(BUILD_DIR+ '/css'));
-});
-
-// Minify CSS
-gulp.task('style-minify', function() {
-    return gulp.src([BUILD_DIR+ '/css/**/*.css'])
-        .pipe(plugins.minifyCss())
-        .pipe(gulp.dest(BUILD_DIR+ '/css'));
-});
-
-// Validate CSS
-gulp.task('style-lint', function() {
-    return gulp.src([BUILD_DIR+ '/css/**/*.css'])
-        .pipe(plugins.csslint())
-        .pipe(plugins.csslint.reporter());
+        .pipe(gulp.dest(BUILD_DIR+ '/css/'));
 });
 
 // Remove unused CSS
-gulp.task('style-uncss', function() {
-    return gulp.src([BUILD_DIR+ '/css/style.css'])
+gulp.task('css-uncss', function() {
+    return gulp.src([BUILD_DIR+ '/css/*.css'])
         .pipe(plugins.uncss({
             html: glob.sync(BUILD_DIR+ '/**/*.html')
         }))
-        .pipe(gulp.dest(BUILD_DIR+ '/css'));
+        .pipe(gulp.dest(BUILD_DIR+ '/css/'));
 });
 
+// Lint CSS
+gulp.task('css-lint', function() {
+    return gulp.src([BUILD_DIR+ '/css/*.css'])
+        .pipe(plugins.csslint())
+        .pipe(plugins.csslint.reporter())
+        .pipe(gulp.dest(BUILD_DIR+ '/css/'));
+});
 
 // Generating and inlining critical-path CSS
 // -----------------------------------------
 // Copy our site styles to a site.css file
 // for async loading later
-gulp.task('copystyles', function () {
-    return gulp.src(['dist/css/style.css'])
+gulp.task('css-copystyles', function () {
+    return gulp.src([BUILD_DIR+ '/css/style.css'])
         .pipe(plugins.rename({
             basename: "site"
         }))
-        .pipe(gulp.dest('dist/css'));
+        .pipe(gulp.dest(BUILD_DIR+ '/css'));
 });
-
-gulp.task('critical', ['copystyles'], function () {
+gulp.task('css-critical', ['css-copystyles'], function () {
     // At this point, we have our
     // production styles in css/styles.css
     // As we're going to overwrite this with
@@ -116,26 +100,34 @@ gulp.task('critical', ['copystyles'], function () {
 });
 
 
-
-
-
+// CSS MAIN TASK
 // Development
-gulp.task('dev-styles', function(done) {
-    runSequence(
-        'stylus-css',
-        'style-improvement',
-        'style-lint'
-    ,done);
+gulp.task('css-dev', function() {
+    return gulp.src([
+            APP_DIR+ '/css/styl/*.styl'
+        ])
+        .pipe(plugins.stylus({
+            use: koutoSwiss(),
+        }))
+        .pipe(gulp.dest(BUILD_DIR+ '/css/'));
+});
+// Production
+gulp.task('css-prod', function() {
+    return gulp.src([
+            APP_DIR+ '/css/styl/*.styl'
+        ])
+        .pipe(plugins.stylus({
+            use: koutoSwiss(),
+        }))
+        .pipe(plugins.pleeease({
+            browsers: AUTOPREFIXER_BROWSERS,
+            minifier: false
+        }))
+        .pipe(plugins.minifyCss())
+        .pipe(gulp.dest(BUILD_DIR+ '/css/'));
 });
 
-// Production
-gulp.task('prod-styles', function(done) {
-    runSequence(
-        'stylus-css',
-        'style-improvement',
-        'style-minify'
-    ,done);
-});
+
 
 
 
@@ -143,29 +135,45 @@ gulp.task('prod-styles', function(done) {
 /// SCRIPTS
 ////////////////////////////////////////////////////////////////////////////////
 
+// Merge all scripts into one
+gulp.task('js-concat', function() {
+    return gulp.src([
+        APP_DIR+ '/js/vendor/**/*.js',
+        // '../bower_components/',
+        APP_DIR+ '/js/app.js',
+    ])
+    .pipe(plugins.concat('app.js'))
+    .pipe(gulp.dest(BUILD_DIR+ '/js/'));
+});
+
 // Build Custom modernizr.js for better performance
-gulp.task('build-modernizr', function() {
-  gulp.src([BUILD_DIR+ '/js/**/*.js', BUILD_DIR+ '/css/**/*.css'])
+gulp.task('js-modernizr', function() {
+  gulp.src([BUILD_DIR+ '/js/app.js', BUILD_DIR+ '/css/styles.css'])
     .pipe(plugins.modernizr())
-    .pipe(plugins.uglify())
-    .pipe(gulp.dest(BUILD_DIR+ '/js'))
+    .pipe(gulp.dest(BUILD_DIR+ '/js/'))
 });
 
 //
-gulp.task('jshint', function () {
-  return gulp.src(APP_DIR+ '/js/app/**/*.js')
+gulp.task('js-hint', function () {
+  return gulp.src(APP_DIR+ '/js/**/*.js')
     .pipe(reload({stream: true, once: true}))
     .pipe(plugins.jshint())
     .pipe(plugins.jshint.reporter('jshint-stylish'))
     .pipe(plugins.if(!browserSync.active, plugins.jshint.reporter('fail')));
 });
 
-// compile all scripts
-gulp.task('compile-scripts', ['jshint'], function() {
-    return gulp.src(APP_DIR+ '/js/**/*.js')
+// Minify for Production
+gulp.task('js-minify', function() {
+    return gulp.src([BUILD_DIR+ '/js/app.js'])
         .pipe(plugins.uglify())
         .pipe(gulp.dest(BUILD_DIR+ '/js'));
 });
+
+
+// JS MAIN TASK
+gulp.task('js-dev', ['js-concat', ]);
+gulp.task('js-prod', ['js-concat', 'js-minify']);
+
 
 
 
@@ -188,29 +196,34 @@ gulp.task('images', function () {
 
 
 
+
 ////////////////////////////////////////////////////////////////////////////////
 /// HTML
 ////////////////////////////////////////////////////////////////////////////////
 gulp.task('html', function() {
     var YOUR_LOCALS = {};
-    return gulp.src(APP_DIR+ '/html/pages/*.twig')
+    return gulp.src(APP_DIR+ '/html/pages/**/*.twig')
         .pipe(plugins.twig({
-            // data: {
-            //     title: 'Gulp and Twig',
-            //     benefits: [
-            //         'Fast',
-            //         'Flexible',
-            //         'Secure'
-            //     ]
-            // }
+            // data: {}
         }))
         .pipe(gulp.dest(BUILD_DIR));
 });
 
 
 
+
+
+////////////////////////////////////////////////////////////////////////////////
+/// COPY
+////////////////////////////////////////////////////////////////////////////////
+
+gulp.task('copy-fonts', function() {
+    return gulp.src(APP_DIR+ '/fonts/**/*')
+        .pipe(gulp.dest(BUILD_DIR+ '/fonts'));
+});
+
 // Copy Extra Files
-gulp.task('copy-extra-files', function() {
+gulp.task('copy-extra-files', ['copy-fonts'], function() {
     return gulp.src([
             APP_DIR+ '/.htaccess',
             APP_DIR+ '/browserconfig.xml',
@@ -223,13 +236,16 @@ gulp.task('copy-extra-files', function() {
 });
 
 
+
+
+
+
 // clean build directory
 gulp.task('clean', function (done) {
     require('del')(
         BUILD_DIR,
     done);
 });
-
 
 
 // Watch Files For Changes & Reload
@@ -244,37 +260,43 @@ gulp.task('serve', function () {
     // https: true,
     server: [BUILD_DIR]
   });
-    gulp.watch(APP_DIR+ '/**/*.twig', ['html', reload]);
-    gulp.watch(APP_DIR+ '/**/*.styl', ['dev-styles', reload]);
-    gulp.watch(APP_DIR+ '/js/**/*.js', ['jshint']);
+    gulp.watch(APP_DIR+ '/html/**/*.twig', ['html', reload]);
+    gulp.watch(APP_DIR+ '/css/**/*.styl', ['css-dev', reload]);
+    gulp.watch(APP_DIR+ '/js/**/*.js', ['js-dev', reload]);
 });
+
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////////
 /// MAIN TASKS
 ////////////////////////////////////////////////////////////////////////////////
-
-gulp.task('build', function(done) {
+// Development
+gulp.task('dev', function(done) {
     runSequence(
         'clean',
-        'html',
-        ['prod-styles', 'compile-scripts'],
-        'copy-extra-files'
-    ,done);
-});
-
-gulp.task('development', function(done) {
-    runSequence(
-        'clean',
-        'html',
-        ['dev-styles', 'compile-scripts'],
+        ['html', 'css-dev', 'js-dev'],
         'copy-extra-files',
         'serve'
     ,done);
 });
+// Production
+gulp.task('prod', function(done) {
+    runSequence(
+        'clean',
+        ['html', 'css-prod', 'js-prod'],
+        'copy-extra-files'
+    ,done);
+});
 
-gulp.task('bc', ['critical']) // build critical css path
-gulp.task('uc', ['style-uncss']) // Remove unused css selector
-gulp.task('bm', ['build-modernizr']); // build modernizr
+gulp.task('default', ['dev']);
+gulp.task('build', ['prod']);
+
+// EXTRA TASK
+gulp.task('bc', ['css-critical']) // build critical css path
+gulp.task('uc', ['css-uncss']) // Remove unused css selector
+gulp.task('cl', ['css-lint']) // Remove unused css selector
+gulp.task('bm', ['js-modernizr']); // build modernizr
 gulp.task('img', ['images']); // compress images
-gulp.task('default', ['development']);
+

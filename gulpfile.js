@@ -52,13 +52,6 @@ gulp.task('css-uncss', function() {
         .pipe(gulp.dest(BUILD_DIR+ '/css/'));
 });
 
-// Lint CSS
-gulp.task('css-lint', function() {
-    return gulp.src([BUILD_DIR+ '/css/*.css'])
-        .pipe(plugins.csslint())
-        .pipe(plugins.csslint.reporter())
-        .pipe(gulp.dest(BUILD_DIR+ '/css/'));
-});
 
 // Generating and inlining critical-path CSS
 // -----------------------------------------
@@ -110,6 +103,8 @@ gulp.task('css-dev', function() {
             },
             use: koutoSwiss(),
         }))
+        .pipe(plugins.csslint())
+        .pipe(plugins.csslint.reporter())
         .pipe(gulp.dest(BUILD_DIR+ '/css/'));
 });
 // Production
@@ -158,7 +153,7 @@ gulp.task('js-modernizr', function() {
 
 //
 gulp.task('js-hint', function () {
-  return gulp.src(APP_DIR+ '/js/**/*.js')
+  return gulp.src(jsApp)
     .pipe(reload({stream: true, once: true}))
     .pipe(plugins.jshint())
     .pipe(plugins.jshint.reporter('jshint-stylish'))
@@ -292,7 +287,6 @@ gulp.task('build', ['prod']);
 // EXTRA TASK
 gulp.task('bc', ['css-critical']) // build critical css path
 gulp.task('uc', ['css-uncss']) // Remove unused css selector
-gulp.task('cl', ['css-lint']) // Lint CSS
 gulp.task('bm', ['js-modernizr']); // build modernizr
 gulp.task('img', ['images']); // compress images
 

@@ -31,8 +31,12 @@ var AUTOPREFIXER_BROWSERS = [
   'bb >= 10'
 ];
 
-
-
+// List of JS to concatenate
+var jsApp = [
+        APP_DIR+ '/js/vendor/**/*.js',
+        // '../bower_components/',
+        APP_DIR+ '/js/app.js',
+];
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -133,13 +137,16 @@ gulp.task('css-prod', function() {
 
 // Merge all scripts into one
 gulp.task('js-concat', function() {
-    return gulp.src([
-        APP_DIR+ '/js/vendor/**/*.js',
-        // '../bower_components/',
-        APP_DIR+ '/js/app.js',
-    ])
+    return gulp.src(jsApp)
     .pipe(plugins.concat('app.js'))
     .pipe(gulp.dest(BUILD_DIR+ '/js/'));
+});
+
+// Minify for Production
+gulp.task('js-minify', function() {
+    return gulp.src([BUILD_DIR+ '/js/app.js'])
+        .pipe(plugins.uglify())
+        .pipe(gulp.dest(BUILD_DIR+ '/js'));
 });
 
 // Build Custom modernizr.js for better performance
@@ -156,13 +163,6 @@ gulp.task('js-hint', function () {
     .pipe(plugins.jshint())
     .pipe(plugins.jshint.reporter('jshint-stylish'))
     .pipe(plugins.if(!browserSync.active, plugins.jshint.reporter('fail')));
-});
-
-// Minify for Production
-gulp.task('js-minify', function() {
-    return gulp.src([BUILD_DIR+ '/js/app.js'])
-        .pipe(plugins.uglify())
-        .pipe(gulp.dest(BUILD_DIR+ '/js'));
 });
 
 

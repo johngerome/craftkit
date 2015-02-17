@@ -100,6 +100,10 @@ gulp.task('css-dev', function() {
             APP_DIR+ '/css/styl/*.styl'
         ])
         .pipe(plugins.stylus({
+            sourcemap: {
+                inline: true,
+                sourceRoot: '.',
+            },
             use: koutoSwiss(),
         }))
         .pipe(gulp.dest(BUILD_DIR+ '/css/'));

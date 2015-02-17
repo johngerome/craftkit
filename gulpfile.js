@@ -296,7 +296,7 @@ gulp.task('build', ['prod']);
 // EXTRA TASK
 gulp.task('bc', ['css-critical']) // build critical css path
 gulp.task('uc', ['css-uncss']) // Remove unused css selector
-gulp.task('cl', ['css-lint']) // Remove unused css selector
+gulp.task('cl', ['css-lint']) // Lint CSS
 gulp.task('bm', ['js-modernizr']); // build modernizr
 gulp.task('img', ['images']); // compress images
 

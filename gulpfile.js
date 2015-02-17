@@ -39,15 +39,6 @@ var AUTOPREFIXER_BROWSERS = [
 /// STYLESHEETS
 ////////////////////////////////////////////////////////////////////////////////
 
-// Stylus to CSS
-gulp.task('css-styl', function() {
-    return gulp.src([APP_DIR+ '/css/styl/**/*.styl'])
-        .pipe(plugins.stylus({
-            use: koutoSwiss(),
-        }))
-        .pipe(gulp.dest(BUILD_DIR+ '/css/'));
-});
-
 // Remove unused CSS
 gulp.task('css-uncss', function() {
     return gulp.src([BUILD_DIR+ '/css/*.css'])

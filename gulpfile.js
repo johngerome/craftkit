@@ -8,14 +8,16 @@ var plugins     = require('gulp-load-plugins')();
 var runSequence = require('run-sequence');
 var pkg         = require('./package.json');
 var browserSync = require('browser-sync');
-var koutoSwiss  = require('kouto-swiss');
 var argv        = require('yargs').argv;
 var glob        = require('glob');
-var critical    = require('critical');
 var reload      = browserSync.reload;
+
+var critical    = require('critical');
+var koutoSwiss  = require('kouto-swiss');
 
 var APP_DIR     = 'app';
 var BUILD_DIR   = 'dist';
+
 
 var AUTOPREFIXER_BROWSERS = [
   'ie >= 9',
@@ -121,9 +123,8 @@ gulp.task('css-prod', function() {
         }))
         .pipe(plugins.pleeease({
             browsers: AUTOPREFIXER_BROWSERS,
-            minifier: false
+            minifier: true
         }))
-        .pipe(plugins.minifyCss())
         .pipe(gulp.dest(BUILD_DIR+ '/css/'));
 });
 

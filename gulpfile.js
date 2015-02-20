@@ -58,7 +58,7 @@ gulp.task('css-uncss', function() {
 // Copy our site styles to a site.css file
 // for async loading later
 gulp.task('css-copystyles', function () {
-    return gulp.src([BUILD_DIR+ '/css/style.css'])
+    return gulp.src([BUILD_DIR+ '/css/styles.css'])
         .pipe(plugins.rename({
             basename: "site"
         }))

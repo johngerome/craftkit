@@ -1,0 +1,63 @@
+//==============================================================================
+// Config Variables
+//==============================================================================
+// The config variables have default values that are just looking to be adjusted.
+// Use this variables to customize your Typesettings. Or take the whole thing
+// apart if you want :)
+
+// Font families and default text color.
+$font-sans = 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$font-serif = Georgia, 'Times New Roman', serif;
+$font-mono = 'Lucida Console', Monaco, monospace;
+$text-color = #000;
+
+// The vertical grid unit. Margin, padding, and line-height are set to multiples
+// of this value. This is the value that determines the baseline for our vertical
+// rhythm. The default value of 6px allows more fine tuned designs that still
+// obey vertical rhythm.
+$base-vertical-unit = 6px;
+
+// The value that multiplies the $base-vertical-unit to get the $base-line-height.
+// This gives type an ideal line-height.
+$base-line-multi = 4;
+
+// Base font size in pixels.
+$base-font-size = 16px;
+
+// Modular scale ratio that is used to figure out all the different font sizes
+$ms-ratio = 1.414;
+
+// [1] Paragraph setting that you can turn on or off the indent of the first line
+// of a new paragraph.
+// [2] Paragraph setting that you can turn on or off to have your paragraphs ragged
+// right or justified.
+$paragraph-indent = true; // [1]
+$paragraph-justify = true; // [2]
+
+// You can optionally load type styles that use Typesettings.
+$load-typesetted = true;
+
+//==============================================================================
+// Internal Variables
+//==============================================================================
+// It's Best not to adjust the internal variables directly.[Note]
+
+// Creates a handy variable for the 1em
+$base-em-font-size= 1em;
+
+// Generates modular scale values in Ems. [Note]If you need more size up and/or down
+// then add more sizes.
+// [1] One step down in the modular scale in EMs
+// [2] Two steps down in the modular scale in EMs
+// [3] Three steps down in the modular scale in EMs
+// [4] One step up in the modular scale in EMs
+// [5] Two steps up in the modular scale in EMs
+// [6] Three steps up in the modular scale in EMs
+// [7] Four steps up in the modular scale in EMs
+$ms-down1= $base-em-font-size / $ms-ratio; // [1]
+$ms-down2= $ms-down1 /$ms-ratio; // [2]
+$ms-down3= $ms-down2 / $ms-ratio; // [3]
+$ms-up1= $base-em-font-size * $ms-ratio; // [4]
+$ms-up2= $ms-up1 * $ms-ratio; // [5]
+$ms-up3= $ms-up2 * $ms-ratio; // [6]
+$ms-up4= $ms-up3 * $ms-ratio; // [7]

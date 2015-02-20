@@ -5,6 +5,7 @@
 
 var gulp        = require('gulp');
 var plugins     = require('gulp-load-plugins')();
+var watch       = require('gulp-watch');
 var runSequence = require('run-sequence');
 var pkg         = require('./package.json');
 var browserSync = require('browser-sync');
@@ -192,15 +193,17 @@ gulp.task('images', function () {
 /// HTML
 ////////////////////////////////////////////////////////////////////////////////
 gulp.task('html', function() {
-    var YOUR_LOCALS = {};
-    return gulp.src(APP_DIR+ '/html/pages/**/*.twig')
-        .pipe(plugins.twig({
-            // data: {}
-        }))
+    return gulp.src(APP_DIR+ '/html/pages/*.twig')
+        .pipe(plugins.twig())
         .pipe(gulp.dest(BUILD_DIR));
 });
 
-
+// styleguide
+gulp.task('styleguide', function() {
+    return gulp.src(APP_DIR+ '/styleguide/pages/*.twig')
+        .pipe(plugins.twig())
+        .pipe(gulp.dest(BUILD_DIR+ '/styleguide/'));
+});
 
 
 
@@ -240,20 +243,28 @@ gulp.task('clean', function (done) {
 
 
 // Watch Files For Changes & Reload
-gulp.task('serve', function () {
-  browserSync({
-    notify: false,
-    // Customize the BrowserSync console logging prefix
-    //logPrefix: 'styly',
-    // Run as an https by uncommenting 'https: true'
-    // Note: this uses an unsigned certificate which on first access
-    //       will present a certificate warning in the browser.
-    // https: true,
-    server: [BUILD_DIR]
-  });
-    gulp.watch(APP_DIR+ '/html/**/*.twig', ['html', reload]);
-    gulp.watch(APP_DIR+ '/css/**/*.styl', ['css-dev', reload]);
-    gulp.watch(APP_DIR+ '/js/**/*.js', ['js-dev', reload]);
+gulp.task('serve', function (done) {
+    browserSync({
+        notify: false,
+        // Customize the BrowserSync console logging prefix
+        //logPrefix: 'styly',
+        // Run as an https by uncommenting 'https: true'
+        // Note: this uses an unsigned certificate which on first access
+        //       will present a certificate warning in the browser.
+        // https: true,
+        server: [BUILD_DIR]
+    });
+    watch(APP_DIR+ '/html/**/*.twig', function(){
+        setTimeout(function () {
+            gulp.start('html', reload);
+        }, 300);
+    });
+    watch(APP_DIR+ '/css/**/*.styl', function(){
+        gulp.start('css-dev', reload);
+    });
+    watch(APP_DIR+ '/js/**/*.js', function(){
+        gulp.start('js-dev', reload);
+    });
 });
 
 
@@ -267,7 +278,7 @@ gulp.task('serve', function () {
 gulp.task('dev', function(done) {
     runSequence(
         'clean',
-        ['html', 'css-dev', 'js-dev'],
+        ['styleguide', 'html', 'css-dev', 'js-dev'],
         'copy-extra-files',
         'serve'
     ,done);
@@ -276,7 +287,7 @@ gulp.task('dev', function(done) {
 gulp.task('prod', function(done) {
     runSequence(
         'clean',
-        ['html', 'css-prod', 'js-prod'],
+        ['styleguide', 'html', 'css-prod', 'js-prod'],
         'copy-extra-files'
     ,done);
 });
@@ -289,4 +300,3 @@ gulp.task('bc', ['css-critical']) // build critical css path
 gulp.task('uc', ['css-uncss']) // Remove unused css selector
 gulp.task('bm', ['js-modernizr']); // build modernizr
 gulp.task('img', ['images']); // compress images
-

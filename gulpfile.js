@@ -281,14 +281,14 @@ gulp.task('prod', function(done) {
     runSequence(
         'clean',
         ['html', 'css-prod', 'js-prod'],
-        'copy-extra-files'
+        'copy-extra-files',
     ,done);
 });
 
 gulp.task('default', ['dev']);
 gulp.task('build', ['prod']);
 
-// EXTRA TASK
+// OPTIONAL TASK
 gulp.task('bc', ['css-critical']) // build critical css path
 gulp.task('uc', ['css-uncss']) // Remove unused css selector
 gulp.task('bm', ['js-modernizr']); // build modernizr

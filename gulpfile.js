@@ -198,13 +198,6 @@ gulp.task('html', function() {
         .pipe(gulp.dest(BUILD_DIR));
 });
 
-// styleguide
-gulp.task('styleguide', function() {
-    return gulp.src(APP_DIR+ '/styleguide/pages/*.twig')
-        .pipe(plugins.twig())
-        .pipe(gulp.dest(BUILD_DIR+ '/styleguide/'));
-});
-
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -278,7 +271,7 @@ gulp.task('serve', function (done) {
 gulp.task('dev', function(done) {
     runSequence(
         'clean',
-        ['styleguide', 'html', 'css-dev', 'js-dev'],
+        ['html', 'css-dev', 'js-dev'],
         'copy-extra-files',
         'serve'
     ,done);
@@ -287,7 +280,7 @@ gulp.task('dev', function(done) {
 gulp.task('prod', function(done) {
     runSequence(
         'clean',
-        ['styleguide', 'html', 'css-prod', 'js-prod'],
+        ['html', 'css-prod', 'js-prod'],
         'copy-extra-files'
     ,done);
 });

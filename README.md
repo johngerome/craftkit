@@ -37,3 +37,4 @@ While you're working on your project, run: `gulp` And you're set!
 - [gulp-uncss](https://github.com/addyosmani/gulp-uncss-task)
 - [gulp-stylus](https://github.com/stevelacy/gulp-stylus)
 - [gulp-uglify](https://github.com/terinjokes/gulp-uglify)
+- [gulp-watch](https://github.com/floatdrop/gulp-watch)

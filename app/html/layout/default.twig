@@ -2,16 +2,49 @@
 <html class="no-js" lang="">
     <head>
         <meta charset="utf-8">
+
+        <!--
+        DNS Prefetching
+        http://csswizardry.com/2013/01/front-end-performance-for-web-designers-and-front-end-developers
+        -->
+        <link rel="dns-prefetch" href="//ajax.googleapis.com">
+        <link rel="dns-prefetch" href="//use.typekit.net">
+        <link rel="dns-prefetch" href="//google-analytics.com">
+
+        <!--
+        Asset Prefetching
+        http://csswizardry.com/2013/01/front-end-performance-for-web-designers-and-front-end-developers
+        -->
+        <link rel="prefetch" href="">
+
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>{% block title %}{% endblock %}</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Facebook OG : http://ogp.me  -->
+        <meta property="og:title" content="">
+        <meta property="og:type" content="">
+        <meta property="og:url" content="">
+        <meta property="og:image" content="og-logo200x200.png">
+        <meta property="og:site_name" content="">
+        <meta property="og:description" content="">
+        <meta property="fb:admins" content="">
+
+        <!-- Twitter OG : https://dev.twitter.com/cards/types/summary -->
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="">
+        <meta name="twitter:title" content="">
+        <meta name="twitter:description" content="">
+        <meta name="twitter:image" content="120x120.jpg">
+        <meta name="twitter:url" content="">
 
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <!-- Place favicon.ico in the root directory -->
 
         <link rel="stylesheet" href="css/styles.css">
         <script src="js/modernizr.js"></script>
+
     </head>
     <body>
         <!--[if lt IE 8]>

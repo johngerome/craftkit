@@ -281,7 +281,7 @@ gulp.task('prod', function(done) {
     runSequence(
         'clean',
         ['html', 'css-prod', 'js-prod'],
-        'copy-extra-files',
+        'copy-extra-files'
     ,done);
 });
 

@@ -131,9 +131,16 @@ gulp.task('css-prod', function() {
 /// SCRIPTS
 ////////////////////////////////////////////////////////////////////////////////
 
+//
+gulp.task('js-react', function () {
+    return gulp.src(APP_DIR+ '/jsx/*.jsx')
+        .pipe(plugins.react({harmony: true}))
+        .pipe(gulp.dest(APP_DIR+ '/jsx/build'));
+});
+
 // Merge all scripts into one
 gulp.task('js-concat', function() {
-    return gulp.src(jsApp)
+    return gulp.src([jsApp, APP_DIR+ '/jsx/js'])
     .pipe(plugins.concat('app.js'))
     .pipe(gulp.dest(BUILD_DIR+ '/js/'));
 });

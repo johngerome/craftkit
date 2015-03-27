@@ -94,7 +94,7 @@ gulp.task('css-critical', ['css-copystyles'], function () {
 // Development
 gulp.task('css-dev', function() {
     return gulp.src([
-            APP_DIR+ '/css/sass/*.{scss, sass}'
+            APP_DIR+ '/css/sass/**/*.{scss, sass}'
         ])
         .pipe(plugins.sass())
         .pipe(plugins.csslint())
@@ -104,7 +104,7 @@ gulp.task('css-dev', function() {
 // Production
 gulp.task('css-prod', function() {
     return gulp.src([
-            APP_DIR+ '/css/sass/*.{scss, sass}'
+            APP_DIR+ '/css/sass/**/*.{scss, sass}'
         ])
         .pipe(plugins.sass())
         .pipe(plugins.pleeease({
@@ -243,7 +243,7 @@ gulp.task('serve', function (done) {
             gulp.start('html', reload);
         }, 300);
     });
-    watch(APP_DIR+ '/css/**/*.styl', function(){
+    watch(APP_DIR+ '/css/**/**/*.{scss, sass}', function(){
         gulp.start('css-dev', reload);
     });
     watch(APP_DIR+ '/js/**/*.js', function(){

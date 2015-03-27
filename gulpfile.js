@@ -271,7 +271,7 @@ gulp.task('serve', function (done) {
 gulp.task('dev', function(done) {
     runSequence(
         'clean',
-        ['html', 'css-dev', 'js-dev'],
+        ['images', 'html', 'css-dev', 'js-dev'],
         'copy-extra-files',
         'serve'
     ,done);
@@ -280,7 +280,7 @@ gulp.task('dev', function(done) {
 gulp.task('prod', function(done) {
     runSequence(
         'clean',
-        ['html', 'css-prod', 'js-prod'],
+        ['images', 'html', 'css-prod', 'js-prod'],
         'copy-extra-files'
     ,done);
 });

@@ -14,7 +14,6 @@ var glob        = require('glob');
 var reload      = browserSync.reload;
 
 var critical    = require('critical');
-var koutoSwiss  = require('kouto-swiss');
 
 var APP_DIR     = 'app';
 var BUILD_DIR   = 'dist';
@@ -95,15 +94,9 @@ gulp.task('css-critical', ['css-copystyles'], function () {
 // Development
 gulp.task('css-dev', function() {
     return gulp.src([
-            APP_DIR+ '/css/styl/*.styl'
+            APP_DIR+ '/css/sass/*.{scss, sass}'
         ])
-        .pipe(plugins.stylus({
-            sourcemap: {
-                inline: true,
-                sourceRoot: '.',
-            },
-            use: koutoSwiss(),
-        }))
+        .pipe(plugins.sass())
         .pipe(plugins.csslint())
         .pipe(plugins.csslint.reporter())
         .pipe(gulp.dest(BUILD_DIR+ '/css/'));
@@ -111,11 +104,9 @@ gulp.task('css-dev', function() {
 // Production
 gulp.task('css-prod', function() {
     return gulp.src([
-            APP_DIR+ '/css/styl/*.styl'
+            APP_DIR+ '/css/sass/*.{scss, sass}'
         ])
-        .pipe(plugins.stylus({
-            use: koutoSwiss(),
-        }))
+        .pipe(plugins.sass())
         .pipe(plugins.pleeease({
             browsers: AUTOPREFIXER_BROWSERS,
             minifier: true

@@ -10,6 +10,7 @@ A Starter Kit that's been tailored to leverage the latest tools and technologies
 While you're working on your project, run: `gulp` And you're set!
 
 ###Gulp Task
+- `gulp` - Default task including watching of files
 - `gulp build` - Build your project for production.
 - `gulp bc` - Build Critical CSS Path
 - `gulp uc` - Remove unused css selector

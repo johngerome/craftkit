@@ -95,7 +95,7 @@ gulp.task('css-critical', ['css-copystyles'], function () {
 // Development
 gulp.task('css-dev', function() {
     return gulp.src([
-            APP_DIR+ '/css/styl/*.styl'
+            APP_DIR+ '/css/styl/**/*.styl'
         ])
         .pipe(plugins.stylus({
             sourcemap: {
@@ -111,7 +111,7 @@ gulp.task('css-dev', function() {
 // Production
 gulp.task('css-prod', function() {
     return gulp.src([
-            APP_DIR+ '/css/styl/*.styl'
+            APP_DIR+ '/css/styl/**/*.styl'
         ])
         .pipe(plugins.stylus({
             use: koutoSwiss(),

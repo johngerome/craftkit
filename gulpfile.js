@@ -96,7 +96,9 @@ gulp.task('css-dev', function() {
     return gulp.src([
             APP_DIR+ '/css/sass/**/*.{scss, sass}'
         ])
-        .pipe(plugins.sass())
+        .pipe(plugins.sass({
+            errLogToConsole: true
+        }))
         .pipe(plugins.csslint())
         .pipe(plugins.csslint.reporter())
         .pipe(gulp.dest(BUILD_DIR+ '/css/'));
@@ -106,7 +108,9 @@ gulp.task('css-prod', function() {
     return gulp.src([
             APP_DIR+ '/css/sass/**/*.{scss, sass}'
         ])
-        .pipe(plugins.sass())
+        .pipe(plugins.sass({
+            errLogToConsole: true
+        }))
         .pipe(plugins.pleeease({
             browsers: AUTOPREFIXER_BROWSERS,
             minifier: true

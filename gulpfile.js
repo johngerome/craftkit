@@ -14,10 +14,11 @@ var glob        = require('glob');
 var reload      = browserSync.reload;
 
 var critical    = require('critical');
-var koutoSwiss  = require('kouto-swiss');
 
 var APP_DIR     = 'app';
 var BUILD_DIR   = 'dist';
+var pType       = '';
+var pName       = '';
 
 
 var AUTOPREFIXER_BROWSERS = [
@@ -35,7 +36,9 @@ var AUTOPREFIXER_BROWSERS = [
 // List of JS to concatenate
 var jsApp = [
         APP_DIR+ '/js/vendor/**/*.js',
-        // '../bower_components/',
+        'bower_components/foundation/js/foundation.js',
+        'bower_components/foundation/js/foundation/foundation.topbar.js',
+        APP_DIR+ '/js/map.js',
         APP_DIR+ '/js/app.js',
 ];
 
@@ -95,26 +98,22 @@ gulp.task('css-critical', ['css-copystyles'], function () {
 // Development
 gulp.task('css-dev', function() {
     return gulp.src([
-            APP_DIR+ '/css/styl/**/*.styl'
+            APP_DIR+ '/css/sass/**/*.{scss, sass}'
         ])
-        .pipe(plugins.stylus({
-            sourcemap: {
-                inline: true,
-                sourceRoot: '.',
-            },
-            use: koutoSwiss(),
+        .pipe(plugins.sass({
+            errLogToConsole: true
         }))
-        .pipe(plugins.csslint())
-        .pipe(plugins.csslint.reporter())
+        // .pipe(plugins.csslint())
+        // .pipe(plugins.csslint.reporter())
         .pipe(gulp.dest(BUILD_DIR+ '/css/'));
 });
 // Production
 gulp.task('css-prod', function() {
     return gulp.src([
-            APP_DIR+ '/css/styl/**/*.styl'
+            APP_DIR+ '/css/sass/**/*.{scss, sass}'
         ])
-        .pipe(plugins.stylus({
-            use: koutoSwiss(),
+        .pipe(plugins.sass({
+            errLogToConsole: true
         }))
         .pipe(plugins.pleeease({
             browsers: AUTOPREFIXER_BROWSERS,
@@ -252,7 +251,7 @@ gulp.task('serve', function (done) {
             gulp.start('html', reload);
         }, 300);
     });
-    watch(APP_DIR+ '/css/**/*.styl', function(){
+    watch(APP_DIR+ '/css/**/*.scss', function(){
         gulp.start('css-dev', reload);
     });
     watch(APP_DIR+ '/js/**/*.js', function(){
@@ -262,6 +261,37 @@ gulp.task('serve', function (done) {
 
 
 
+
+gulp.task('make:prompt', function() {
+  return gulp.src(APP_DIR+ '/css/sass', {read: false})
+        .pipe(plugins.prompt.prompt(
+        [{
+            type: 'list',
+            name: 'ptype',
+            message: 'Select a pattern.',
+            choices: ['atoms', 'molecules', 'organisms']
+        },
+        {
+            type: 'input',
+            name: 'pname',
+            message: 'Name:'
+        }],
+            function(res){
+                pType = res.ptype;
+                pName = res.pname;
+            }
+        ))
+});
+
+gulp.task('make:css', function() {
+  return plugins.file(pType+ '/' +pName+ '.scss', '')
+        .pipe(gulp.dest(APP_DIR+ '/css/sass'));
+});
+
+gulp.task('make:html', function() {
+  return plugins.file(pType+ '/' +pName+ '.twig', '')
+        .pipe(gulp.dest(APP_DIR+ '/html'));
+});
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -282,6 +312,13 @@ gulp.task('prod', function(done) {
         'clean',
         ['images', 'html', 'css-prod', 'js-prod'],
         'copy-extra-files'
+    ,done);
+});
+// Make Patterns
+gulp.task('make', function(done) {
+    runSequence(
+        'make:prompt',
+        ['make:css', 'make:html']
     ,done);
 });
 

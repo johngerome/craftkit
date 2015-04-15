@@ -36,10 +36,8 @@ var AUTOPREFIXER_BROWSERS = [
 // List of JS to concatenate
 var jsApp = [
         APP_DIR+ '/js/vendor/**/*.js',
-        'bower_components/foundation/js/foundation.js',
-        'bower_components/foundation/js/foundation/foundation.topbar.js',
+        // 'bower_components/',
         APP_DIR+ '/js/map.js',
-        APP_DIR+ '/js/app.js',
 ];
 
 
